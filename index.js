@@ -7,6 +7,15 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/pages/index.html');
 });
 
+app.get('/two.js', function(req, res){
+  res.sendFile(__dirname + '/bower_components/two/build/two.js');
+});
+
+app.get('/pulsar.js', function(req, res){
+  res.sendFile(__dirname + '/pulsar.js');
+});
+
+
 io.on('connection', function(socket){
   console.log('a user connected');
   socket.on('disconnect', function(){
@@ -26,8 +35,10 @@ stdin.setEncoding('utf8');
 stdin.on( 'data', function( key ){
   // ctrl-c ( end of text )
   if ( key === '\u0003' ) {
+    console.log("Exiting...");
     process.exit();
   } else {
+    console.log("Emitting...");
     io.emit('pulsar', 'lol');
   }
 });
