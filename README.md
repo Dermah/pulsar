@@ -1,0 +1,2 @@
+# pulsar
+A distributed visualiser
