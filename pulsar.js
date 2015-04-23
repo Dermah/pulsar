@@ -1,17 +1,21 @@
 var socket;
 
 function setup() {
-  socket = io.connect('http://localhost:3000');
+  socketSetup(socket);
   createCanvas(windowWidth, windowHeight);
 }
 
 function draw() {
   background(0);
-  fill(0,0,255);
+  fill(0,0,220);
   noStroke();
-  ellipse(12, 40, 80, 80);
+  ellipse(windowWidth/2, windowHeight/2, 80, 80);
 }
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+}
+
+function socketSetup (s) {
+  s = io.connect('http://localhost:3000');
 }
