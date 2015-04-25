@@ -9,12 +9,18 @@ module.exports = function (grunt) {
           'dist/pulsar.js': ['pulsar.js']
         }
       }
-    }
+    },
+
+    watch: {
+      files: ['**/*.js', '!dist/**/*.js'],
+      tasks: ['build'],
+    },
 
 
   });
 
   grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Lint all files
   grunt.registerTask('build', [
