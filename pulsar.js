@@ -1,9 +1,8 @@
 var sketch = function ( p ) {
 
-  var socket;
+  var receiver = require('./Receiver.js')();
 
   p.setup = function() {
-    socketSetup(socket);
     p.createCanvas(p.windowWidth, p.windowHeight);
   }
 
@@ -16,10 +15,6 @@ var sketch = function ( p ) {
 
   p.windowResized = function() {
     p.resizeCanvas(p.windowWidth, p.windowHeight);
-  }
-
-  function socketSetup (s) {
-    s = io.connect('http://localhost:3000');
   }
 }
 
