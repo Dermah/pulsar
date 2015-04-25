@@ -12,7 +12,7 @@ app.get('/two.js', function(req, res){
 });
 
 app.get('/pulsar.js', function(req, res){
-  res.sendFile(__dirname + '/pulsar.js');
+  res.sendFile(__dirname + '/dist/pulsar.js');
 });
 
 
