@@ -2,9 +2,11 @@ var p5 = require('p5');
 
 var sketch = function ( p ) {
 
-  var receiver = require('./Receiver.js')();
+  var Receiver = require('./Receiver.js');
+  var receiver = new Receiver();
 
   p.setup = function() {
+    receiver.connect();
     p.createCanvas(p.windowWidth, p.windowHeight);
   }
 

@@ -39,6 +39,6 @@ stdin.on( 'data', function( key ){
     process.exit();
   } else {
     console.log("Emitting...");
-    io.emit('pulsar', 'lol');
+    io.emit('pulse', 'lol');
   }
 });
