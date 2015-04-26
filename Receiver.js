@@ -7,7 +7,7 @@ Receiver.prototype = new events.EventEmitter;
 Receiver.prototype.connect = function() {
     
   var self = this;
-  var socket = io.connect('http://localhost:3000');
+  var socket = io.connect(window.location.href);
   console.log('Connected to socket server');
   
   socket.on('pulse', function(data) {
