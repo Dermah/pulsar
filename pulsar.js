@@ -27,15 +27,16 @@ var sketch = function (p) {
   }
 
   p.draw = function() {
-    dM.drawAll();
 
     p.background(0);
 
     p.textSize(15);
-    p.fill(150);
+    p.fill(175);
     p.textStyle(p.BOLD);
     var verWidth = p.textWidth("PULSAR - v0.0.1");
     p.text("PULSAR - v0.0.1", p.windowWidth - verWidth - 10, p.windowHeight - 10);
+    
+    dM.drawAll();
   }
 
   p.windowResized = function() {
