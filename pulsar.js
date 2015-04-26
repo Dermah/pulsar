@@ -1,3 +1,5 @@
+var p5 = require('p5');
+
 var sketch = function ( p ) {
 
   var receiver = require('./Receiver.js')();
