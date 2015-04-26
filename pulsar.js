@@ -12,6 +12,7 @@ var sketch = function (p) {
   var dM = new DrawingManager(p);
 
   p.setup = function() {
+    p.frameRate(30);
     receiver.connect();
 
     receiver.on('received', function(data) {
@@ -27,16 +28,16 @@ var sketch = function (p) {
   }
 
   p.draw = function() {
-
+    p.noStroke();
     p.background(0);
+
+    
+    dM.drawAll();
 
     p.textSize(15);
     p.fill(175);
-    p.textStyle(p.BOLD);
     var verWidth = p.textWidth("PULSAR - v0.0.1");
     p.text("PULSAR - v0.0.1", p.windowWidth - verWidth - 10, p.windowHeight - 10);
-    
-    dM.drawAll();
   }
 
   p.windowResized = function() {

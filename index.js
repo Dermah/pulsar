@@ -37,6 +37,14 @@ stdin.on( 'data', function( key ){
   if ( key === '\u0003' ) {
     console.log("Exiting...");
     process.exit();
+  } else if ( key === 'c') {
+    console.log("COLOUR...");
+    io.emit('pulse', { 
+      name: 'flash',
+      r: Math.floor(Math.random() * 255),
+      g: Math.floor(Math.random() * 255),
+      b: Math.floor(Math.random() * 255)
+    });
   } else {
     console.log("Emitting...");
     io.emit('pulse', {name: 'flash'});
