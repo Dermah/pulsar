@@ -39,6 +39,6 @@ stdin.on( 'data', function( key ){
     process.exit();
   } else {
     console.log("Emitting...");
-    io.emit('pulse', 'lol');
+    io.emit('pulse', {name: 'flash'});
   }
 });

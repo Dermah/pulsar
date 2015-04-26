@@ -5,6 +5,9 @@ var sketch = function (p) {
   var Receiver = require('./Receiver.js');
   var receiver = new Receiver();
 
+  var Processor = require('./Processor.js');
+  var processor = new Processor();
+
   var DrawingManager = require('./DrawingManager.js');
   var dM = new DrawingManager(p);
 
@@ -13,6 +16,13 @@ var sketch = function (p) {
 
     receiver.on('received', function(data) {
       console.log("Pulsar: received: " + data);
+
+      var drawing = processor.createDrawing(data);
+
+      dM.add(drawing);
+      // give to drawing manager
+    })
+
     p.createCanvas(p.windowWidth, p.windowHeight);
   }
 
