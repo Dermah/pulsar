@@ -1,9 +1,11 @@
-var Processor = function () {};
-
 require('./pulses/flash.js');
 
+var Processor = function () {};
+
+
 Processor.prototype.createDrawing = function (pulse) {
-  var drawing = require('./pulses/' + pulse.name + '.js');
+  var Drawing = require('./pulses/' + pulse.name + '.js');
+  var drawing = new Drawing(null, pulse);
 
   return drawing;
 }
