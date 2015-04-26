@@ -11,7 +11,9 @@ DrawingManager.prototype.add = function (pulse) {
 }
 
 DrawingManager.prototype.drawAll = function () {
-
+  for (var i = drawings.length - 1; i >= 0; i--) {
+    drawings[i].draw(p);
+  };
 }
 
 module.exports = DrawingManager;
