@@ -1,0 +1,31 @@
+{
+  "name": "pulsar",
+  "version": "0.0.1",
+  "description": "A distributed visualiser",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "bower install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dermah/pulsar.git"
+  },
+  "author": "Dermah",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Dermah/pulsar/issues"
+  },
+  "homepage": "https://github.com/Dermah/pulsar",
+  "dependencies": {
+    "express": "^4.12.3",
+    "p5": "^0.4.4",
+    "socket.io": "^1.3.5",
+    "socket.io-client": "^1.3.5"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^3.7.0",
+    "grunt-contrib-watch": "^0.6.1"
+  }
+}
