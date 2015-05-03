@@ -16,7 +16,6 @@ DrawingManager.prototype.drawAll = function () {
 
     if (drawings[i].done()) {
       drawings.splice(i, 1);
-      i--;
     }
   };
 }
