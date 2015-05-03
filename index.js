@@ -1,4 +1,4 @@
-tty = require('tty');
+var tty = require('tty');
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);

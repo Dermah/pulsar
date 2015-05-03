@@ -6,7 +6,7 @@ module.exports = function (grunt) {
     browserify: {
       dist: {
         files: {
-          'dist/pulsar.js': ['pulsar.js']
+          'dist/pulsar.js': ['src/pulsar.js']
         }
       }
     },
