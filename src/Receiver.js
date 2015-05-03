@@ -5,10 +5,9 @@ var Receiver = function () {};
 Receiver.prototype = new events.EventEmitter;
 
 Receiver.prototype.connect = function() {
-    
   var self = this;
   var socket = io.connect(window.location.href);
-  console.log('Connected to socket server');
+  console.log('Connected to socket server: ' + window.location.href);
   
   socket.on('pulse', function(data) {
     console.log('Receiver: Received pulse');

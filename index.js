@@ -7,21 +7,15 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/pages/index.html');
 });
 
-app.get('/two.js', function(req, res){
-  res.sendFile(__dirname + '/bower_components/two/build/two.js');
-});
-
 app.get('/pulsar.js', function(req, res){
   res.sendFile(__dirname + '/dist/pulsar.js');
 });
-
 
 io.on('connection', function(socket){
   console.log('a user connected');
   socket.on('disconnect', function() {
     console.log('user disconnected');
   });
-
 });
 
 http.listen(3000, function(){
