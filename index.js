@@ -3,6 +3,9 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+app.set('views', './pages');
+app.set('view engine', 'jade');
+
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/pages/index.html');
 });
