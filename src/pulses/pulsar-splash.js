@@ -7,6 +7,7 @@ var Drawing = function (pulse, config, p) {
   pulse.b = Math.random() * 255;
   pulse.shade = 0;
   pulse.played = false;
+  pulse.flashColour = 255
 
   this.pulse = pulse;
 };
@@ -25,6 +26,11 @@ Drawing.prototype.draw = function (p) {
     if (!pulse.played) {
       pulse.sound.play();
       pulse.played = true;
+    }
+    if (pulse.flashColour >= 50) {
+      p.fill(pulse.flashColour -= 50);
+      p.rectMode(p.CENTER);
+      p.rect(p.windowWidth/2, p.windowHeight/2, p.windowWidth, p.windowHeight);
     }
   }
 
