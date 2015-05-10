@@ -7,25 +7,21 @@ app.set('views', './pages');
 app.set('view engine', 'jade');
 
 app.get('/', function(req, res){
-  console.log("Config'd:");
   console.log(req.query);
 
-  var config;
-  if (req.query) {
-    console.log("Defined");
-    config = req.query;
-  } else {
-    console.log("Undefined");
-    config = {
-      col: 1,
-      row: 1
-    }
+  var config = {
+    col: 1,
+    row: 1
+  };
+  
+  if (req.query.col) {
+    config.col = req.query.col;
+  }
+  if (req.query.row) {
+    config.row = req.query.col
   }
 
-  config = JSON.stringify(config);
-
-  res.render('index', { config: config } );
-  //res.sendFile(__dirname + '/pages/index.html');
+  res.render('index', { config: JSON.stringify(config) } );
 });
 
 app.get('/pulsar.js', function(req, res){
