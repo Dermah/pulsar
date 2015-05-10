@@ -1,5 +1,6 @@
 require('./pulses/flash.js');
 require('./pulses/ball.js');
+require('./pulses/pulsar-splash.js');
 
 var Processor = function () {};
 

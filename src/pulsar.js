@@ -33,6 +33,8 @@ pulsar.sketch = function (p) {
     });
 
     p.createCanvas(p.windowWidth, p.windowHeight);
+
+    dM.add(processor.createDrawing({name: 'pulsar-splash', version: pulsar.version}));
   }
 
   p.draw = function() {
@@ -44,6 +46,7 @@ pulsar.sketch = function (p) {
 
     p.textSize(15);
     p.fill(175);
+    p.textAlign(p.LEFT);
     var verWidth = p.textWidth(versionTag);
     p.text(versionTag, p.windowWidth - verWidth - 10, p.windowHeight - 10);
   }
