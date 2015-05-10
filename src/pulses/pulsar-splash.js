@@ -1,6 +1,12 @@
-var Drawing = function (pulse, config) {
-  pulse.framesLeft = 300;
+var Drawing = function (pulse, config, p) {
+  pulse.sound = p.loadSound('splash.mp3');
+
+  pulse.framesLeft = 300 + (Math.random() * 75);
+  pulse.r = Math.random() * 255;
+  pulse.g = Math.random() * 255;
+  pulse.b = Math.random() * 255;
   pulse.shade = 0;
+  pulse.played = false;
 
   this.pulse = pulse;
 };
@@ -9,15 +15,17 @@ Drawing.prototype.draw = function (p) {
   var self = this;
   var pulse = self.pulse
 
-  if (pulse.framesLeft > 255) {
-    if (pulse.framesLeft % 10 === 0) {
-      pulse.r = Math.random() * 255;
-      pulse.g = Math.random() * 255;
-      pulse.b = Math.random() * 255;
-    }
+  if (pulse.framesLeft > 256) {
+    pulse.r = Math.random() * 255;
+    pulse.g = Math.random() * 255;
+    pulse.b = Math.random() * 255;
     pulse.shade += 2;
   } else {
     pulse.shade = pulse.framesLeft;
+    if (!pulse.played) {
+      pulse.sound.play();
+      pulse.played = true;
+    }
   }
 
   p.fill(pulse.r, pulse.g, pulse.b, pulse.shade);
