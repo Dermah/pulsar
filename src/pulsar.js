@@ -1,6 +1,6 @@
+var pulsar = require('../package.json');
 var p5 = require('p5');
 
-var pulsar = {};
 pulsar.config = pulsarConfig;
 pulsarConfig = undefined;
 
@@ -14,6 +14,8 @@ pulsar.sketch = function (p) {
 
   var DrawingManager = require('./DrawingManager.js');
   var dM = new DrawingManager(p);
+
+  var versionTag = pulsar.name.toUpperCase() + " - v" + pulsar.version;
 
   p.setup = function() {
     p.frameRate(30);
@@ -40,8 +42,8 @@ pulsar.sketch = function (p) {
 
     p.textSize(15);
     p.fill(175);
-    var verWidth = p.textWidth("PULSAR - v0.0.1");
-    p.text("PULSAR - v0.0.1", p.windowWidth - verWidth - 10, p.windowHeight - 10);
+    var verWidth = p.textWidth(versionTag);
+    p.text(versionTag, p.windowWidth - verWidth - 10, p.windowHeight - 10);
   }
 
   p.windowResized = function() {
