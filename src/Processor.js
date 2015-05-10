@@ -11,6 +11,9 @@ Processor.prototype.createDrawing = function (pulse, config) {
 }
 
 Processor.prototype.processControl = function (pulse, config) {
+  if (pulse.action === 'reboot') {
+    location.reload();
+  }
 }
 
 module.exports = Processor;

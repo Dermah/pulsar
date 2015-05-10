@@ -32,7 +32,7 @@ Drawing.prototype.draw = function (p) {
 };
 
 Drawing.prototype.done = function () {
-  if (this.pulse.framesLeft <= 0) {
+  if (this.pulse.framesLeft < 0) {
     return true;
   } else {
     return false;

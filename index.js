@@ -69,8 +69,13 @@ stdin.on( 'data', function( key ){
       name: 'ball',
       totalFrames: 100
     });
+  } else if ( key === '\u0012' ) {
+    console.log();
+    console.log("PULSAR REBOOTING");
+    console.log();
+    io.emit('pulsar control', {action: "reboot"});
   } else {
-    console.log("PULSAR: Flashing...");
+    console.log("PULSAR: Flashing... (pressed " + key + ")");
     io.emit('pulse', {name: 'flash'});
   }
 });
