@@ -1,5 +1,5 @@
 # pulsar
-A distributed visualiser
+A distributed drawing thingamajig
 
 ## Install
 
