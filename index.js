@@ -33,14 +33,14 @@ app.get('/pulsar.js', function(req, res){
 });
 
 io.on('connection', function(socket){
-  console.log('a user connected');
+  console.log('PULSAR: client connected');
   socket.on('disconnect', function() {
-    console.log('user disconnected');
+    console.log('PULSAR: client disconnected');
   });
 });
 
-http.listen(80, function(){
-  console.log('listening on *:80');
+http.listen(3000, function(){
+  console.log('SERVER: listening on *:3000');
 });
 
 var stdin = process.stdin;
@@ -50,10 +50,10 @@ stdin.setEncoding('utf8');
 stdin.on( 'data', function( key ){
   // ctrl-c ( end of text )
   if ( key === '\u0003' ) {
-    console.log("Exiting...");
+    console.log("PULSAR: Exiting...");
     process.exit();
   } else if ( key === 'c') {
-    console.log("COLOUR...");
+    console.log("PULSAR: Random colour...");
     io.emit('pulse', { 
       name: 'flash',
       r: Math.floor(Math.random() * 255),
@@ -61,12 +61,12 @@ stdin.on( 'data', function( key ){
       b: Math.floor(Math.random() * 255)
     });
   } else if ( key === 'b') {
-    console.log("COLOUR...");
+    console.log("PULSAR: Sending ball...");
     io.emit('pulse', { 
       name: 'ball'
     });
   } else {
-    console.log("Emitting...");
+    console.log("PULSAR: Flashing...");
     io.emit('pulse', {name: 'flash'});
   }
 });
