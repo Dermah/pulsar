@@ -1,8 +1,8 @@
-var Drawing = function (pulse) {
+var Drawing = function (pulse, config) {
   pulse.totalFrames = 50;
   pulse.framesLeft = pulse.totalFrames;
-  pulse.framesPerCol = pulse.totalFrames/pulsarConfig.totalCols;
-  pulse.startFrame = (pulsarConfig.col - 1) * pulse.framesPerCol;
+  pulse.framesPerCol = pulse.totalFrames/config.totalCols;
+  pulse.startFrame = (config.col - 1) * pulse.framesPerCol;
   pulse.endFrame = pulse.startFrame + pulse.framesPerCol;
 
   console.log(pulse);

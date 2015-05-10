@@ -22,7 +22,7 @@ pulsar.sketch = function (p) {
     receiver.on('received', function(data) {
       console.log("Pulsar: received: " + data);
 
-      var drawing = processor.createDrawing(data);
+      var drawing = processor.createDrawing(data, pulsar.config);
 
       dM.add(drawing);
       // give to drawing manager
