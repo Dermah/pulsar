@@ -30,6 +30,11 @@ app.get('/pulsar.js', function(req, res){
   res.sendFile(__dirname + '/dist/pulsar.js');
 });
 
+app.get('/splash.mp3', function(req, res){
+  console.log("SPLASH");
+  res.sendFile(__dirname + '/splash.mp3');
+});
+
 io.on('connection', function(socket){
   console.log('PULSAR: client connected');
   socket.on('disconnect', function() {
