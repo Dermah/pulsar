@@ -1,20 +1,35 @@
 var Drawing = function (pulse) {
-  pulse.position = 0;
+  pulse.totalFrames = 50;
+  pulse.framesLeft = pulse.totalFrames;
+  pulse.framesPerCol = pulse.totalFrames/pulsarConfig.totalCols;
+  pulse.startFrame = (pulsarConfig.col - 1) * pulse.framesPerCol;
+  pulse.endFrame = pulse.startFrame + pulse.framesPerCol;
+
   console.log(pulse);
-  
+
   this.pulse = pulse;
 };
 
 Drawing.prototype.draw = function (p) {
-  this.pulse.windowWidth = p.windowWidth;
-  p.ellipse(this.pulse.position, p.windowHeight/2, 100, 100);
+  var self = this;
+  var pulse = self.pulse;
+  if (pulse.framesLeft > pulse.startFrame &&
+      pulse.framesLeft < pulse.endFrame) {
 
-  this.pulse.position += 50;
+    var stepWidth = p.windowWidth/(pulse.framesPerCol);
+    var position = stepWidth * (pulse.framesLeft - pulse.startFrame);
+
+    this.pulse.windowWidth = p.windowWidth;
+    p.ellipse(position, p.windowHeight/2, 100, 100);
+
+    this.pulse.position += 50;
+  }
   
+  pulse.framesLeft--;
 };
 
 Drawing.prototype.done = function () {
-  if (this.pulse.position > this.pulse.windowWidth) {
+  if (this.pulse.framesLeft <= 0) {
     return true;
   } else {
     return false;

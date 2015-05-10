@@ -11,7 +11,9 @@ app.get('/', function(req, res){
 
   var config = {
     col: 1,
-    row: 1
+    row: 1,
+    totalCols: 4,
+    totalRows: 2
   };
   
   if (req.query.col) {
