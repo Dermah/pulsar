@@ -60,6 +60,11 @@ stdin.on( 'data', function( key ){
       g: Math.floor(Math.random() * 255),
       b: Math.floor(Math.random() * 255)
     });
+  } else if ( key === 'b') {
+    console.log("COLOUR...");
+    io.emit('pulse', { 
+      name: 'ball'
+    });
   } else {
     console.log("Emitting...");
     io.emit('pulse', {name: 'flash'});
