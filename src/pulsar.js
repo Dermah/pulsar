@@ -1,11 +1,11 @@
 var pulsar = require('../package.json');
 var p5 = require('p5');
+var p5sound = require('../node_modules/p5/lib/addons/p5.sound.js');
 
 pulsar.config = pulsarConfig;
 pulsarConfig = undefined;
 
 pulsar.sketch = function (p) {
-
   var Receiver = require('./Receiver.js');
   var receiver = new Receiver();
 
@@ -16,6 +16,10 @@ pulsar.sketch = function (p) {
   var dM = new DrawingManager(p);
 
   var versionTag = pulsar.name.toUpperCase() + " - v" + pulsar.version;
+
+  p.preload = function () {
+
+  }
 
   p.setup = function() {
     p.frameRate(30);
