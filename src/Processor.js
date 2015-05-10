@@ -4,9 +4,9 @@ require('./pulses/pulsar-splash.js');
 
 var Processor = function () {};
 
-Processor.prototype.createDrawing = function (pulse, config) {
+Processor.prototype.createDrawing = function (pulse, config, p) {
   var Drawing = require('./pulses/' + pulse.name + '.js');
-  var drawing = new Drawing(pulse, config);
+  var drawing = new Drawing(pulse, config, p);
 
   return drawing;
 }

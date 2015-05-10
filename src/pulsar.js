@@ -18,7 +18,6 @@ pulsar.sketch = function (p) {
   var versionTag = pulsar.name.toUpperCase() + " - v" + pulsar.version;
 
   p.preload = function () {
-
   }
 
   p.setup = function() {
@@ -27,7 +26,7 @@ pulsar.sketch = function (p) {
 
     receiver.on('pulse', function(data) {
       console.log("Pulsar: received: " + data);
-      var drawing = processor.createDrawing(data, pulsar.config);
+      var drawing = processor.createDrawing(data, pulsar.config, p);
       dM.add(drawing);
     });
 
@@ -38,7 +37,7 @@ pulsar.sketch = function (p) {
 
     p.createCanvas(p.windowWidth, p.windowHeight);
 
-    dM.add(processor.createDrawing({name: 'pulsar-splash', version: pulsar.version}));
+    dM.add(processor.createDrawing({name: 'pulsar-splash', version: pulsar.version}, pulsar.config, p));
   }
 
   p.draw = function() {
