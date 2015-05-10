@@ -21,14 +21,16 @@ pulsar.sketch = function (p) {
     p.frameRate(30);
     receiver.connect();
 
-    receiver.on('received', function(data) {
+    receiver.on('pulse', function(data) {
       console.log("Pulsar: received: " + data);
-
       var drawing = processor.createDrawing(data, pulsar.config);
-
       dM.add(drawing);
-      // give to drawing manager
-    })
+    });
+
+    receiver.on('pulsar control', function(data) {
+      console.log("Pulsar: received: " + data);
+      processor.processControl(data, pulsar.config);
+    });
 
     p.createCanvas(p.windowWidth, p.windowHeight);
   }
