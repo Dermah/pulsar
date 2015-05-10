@@ -1,8 +1,10 @@
 var p5 = require('p5');
 
-console.log(pulsarConfig);
+var pulsar = {};
+pulsar.config = pulsarConfig;
+pulsarConfig = undefined;
 
-var sketch = function (p) {
+pulsar.sketch = function (p) {
 
   var Receiver = require('./Receiver.js');
   var receiver = new Receiver();
@@ -47,4 +49,4 @@ var sketch = function (p) {
   }
 }
 
-var myp5 = new p5(sketch);
+new p5(pulsar.sketch);
