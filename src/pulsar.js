@@ -1,5 +1,7 @@
 var p5 = require('p5');
 
+console.log(pulsarConfig);
+
 var sketch = function (p) {
 
   var Receiver = require('./Receiver.js');
