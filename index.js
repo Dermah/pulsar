@@ -3,27 +3,33 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+var nextId = 0;
+
 app.set('views', './pages');
 app.set('view engine', 'jade');
 
 app.get('/', function(req, res){
-  console.log(req.query);
+  var totalCols = 4;
+  var totalRows = 2;
 
   var config = {
-    col: 1,
-    row: 1,
-    totalCols: 4,
-    totalRows: 2
+    id: nextId,
+    totalCols: totalCols,
+    totalRows: totalRows,
+    col: (nextId % totalCols) + 1,
+    row: Math.floor(nextId/totalCols) + 1
   };
   
-  if (req.query.col) {
+  if (!req.query.col || !req.query.row) {
+    res.redirect(302, "/?col=" + config.col + "&row=" + config.row);
+    console.log("SERVER: Sent redirect to col: " + config.col + " row: " + config.row);
+    nextId++;
+  } else {
     config.col = req.query.col;
+    config.row = req.query.row;
+    res.render('index', { config: JSON.stringify(config) } );
+    console.log("SERVER: Sent PULSAR to : " + config.col + " row: " + config.row);
   }
-  if (req.query.row) {
-    config.row = req.query.col
-  }
-
-  res.render('index', { config: JSON.stringify(config) } );
 });
 
 app.get('/pulsar.js', function(req, res){

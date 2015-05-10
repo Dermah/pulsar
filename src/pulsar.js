@@ -15,7 +15,7 @@ pulsar.sketch = function (p) {
   var DrawingManager = require('./DrawingManager.js');
   var dM = new DrawingManager(p);
 
-  var versionTag = pulsar.name.toUpperCase() + " - v" + pulsar.version;
+  var versionTag = pulsar.name.toUpperCase() + "(" + pulsar.config.col + ", " + pulsar.config.row + ") - v" + pulsar.version;
 
   p.setup = function() {
     p.frameRate(30);
