@@ -63,6 +63,12 @@ stdin.on( 'data', function( key ){
     io.emit('pulse', { 
       name: 'ball'
     });
+  } else if ( key === '2') {
+    console.log("PULSAR: Sending long ball...");
+    io.emit('pulse', { 
+      name: 'ball',
+      totalFrames: 100
+    });
   } else {
     console.log("PULSAR: Flashing...");
     io.emit('pulse', {name: 'flash'});

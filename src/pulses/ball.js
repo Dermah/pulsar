@@ -1,5 +1,8 @@
 var Drawing = function (pulse, config) {
-  pulse.totalFrames = 50;
+
+  if (!pulse.totalFrames) {
+    pulse.totalFrames = 50;
+  }
   pulse.framesLeft = pulse.totalFrames;
   pulse.framesPerCol = pulse.totalFrames/config.totalCols;
   pulse.startFrame = (config.col - 1) * pulse.framesPerCol;
