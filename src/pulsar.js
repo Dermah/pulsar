@@ -1,6 +1,10 @@
+var pulsar = require('../package.json');
 var p5 = require('p5');
 
-var sketch = function (p) {
+pulsar.config = pulsarInitConfig;
+pulsarInitConfig = undefined;
+
+pulsar.sketch = function (p) {
 
   var Receiver = require('./Receiver.js');
   var receiver = new Receiver();
@@ -11,20 +15,26 @@ var sketch = function (p) {
   var DrawingManager = require('./DrawingManager.js');
   var dM = new DrawingManager(p);
 
+  var versionTag = pulsar.name.toUpperCase() + "(" + pulsar.config.col + ", " + pulsar.config.row + ") - v" + pulsar.version;
+
   p.setup = function() {
     p.frameRate(30);
     receiver.connect();
 
-    receiver.on('received', function(data) {
+    receiver.on('pulse', function(data) {
       console.log("Pulsar: received: " + data);
-
-      var drawing = processor.createDrawing(data);
-
+      var drawing = processor.createDrawing(data, pulsar.config);
       dM.add(drawing);
-      // give to drawing manager
-    })
+    });
+
+    receiver.on('pulsar control', function(data) {
+      console.log("Pulsar: received: " + data);
+      processor.processControl(data, pulsar.config);
+    });
 
     p.createCanvas(p.windowWidth, p.windowHeight);
+
+    dM.add(processor.createDrawing({name: 'pulsar-splash', version: pulsar.version}));
   }
 
   p.draw = function() {
@@ -36,8 +46,9 @@ var sketch = function (p) {
 
     p.textSize(15);
     p.fill(175);
-    var verWidth = p.textWidth("PULSAR - v0.0.1");
-    p.text("PULSAR - v0.0.1", p.windowWidth - verWidth - 10, p.windowHeight - 10);
+    p.textAlign(p.LEFT);
+    var verWidth = p.textWidth(versionTag);
+    p.text(versionTag, p.windowWidth - verWidth - 10, p.windowHeight - 10);
   }
 
   p.windowResized = function() {
@@ -45,4 +56,4 @@ var sketch = function (p) {
   }
 }
 
-var myp5 = new p5(sketch);
+new p5(pulsar.sketch);

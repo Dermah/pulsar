@@ -11,7 +11,12 @@ Receiver.prototype.connect = function() {
   
   socket.on('pulse', function(data) {
     console.log('Receiver: Received pulse');
-    self.emit('received', data);
+    self.emit('pulse', data);
+  });
+
+  socket.on('pulsar control', function(data) {
+    console.log('Receiver: Received control pulse');
+    self.emit('pulsar control', data);
   });
 }
 
