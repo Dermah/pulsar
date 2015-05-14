@@ -25,8 +25,8 @@ app.get('/', function(req, res){
     console.log("SERVER: Sent redirect to col: " + config.col + " row: " + config.row);
     nextId++;
   } else {
-    config.col = req.query.col;
-    config.row = req.query.row;
+    config.col = parseInt(req.query.col);
+    config.row = parseInt(req.query.row);
     res.render('index', { config: JSON.stringify(config) } );
     console.log("SERVER: Sent PULSAR to : " + config.col + " row: " + config.row);
   }
