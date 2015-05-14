@@ -1,8 +1,8 @@
 var pulsar = require('../package.json');
 var p5 = require('p5');
 
-pulsar.config = pulsarConfig;
-pulsarConfig = undefined;
+pulsar.config = pulsarInitConfig;
+pulsarInitConfig = undefined;
 
 pulsar.sketch = function (p) {
 
