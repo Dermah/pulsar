@@ -24,7 +24,9 @@ pulsar.sketch = function (p) {
     receiver.on('pulse', function(data) {
       console.log("Pulsar: received: " + data);
       var drawing = processor.createDrawing(data, pulsar.config);
-      dM.add(drawing);
+      if (drawing) {
+        dM.add(drawing);
+      }
     });
 
     receiver.on('pulsar control', function(data) {
