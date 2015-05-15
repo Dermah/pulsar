@@ -69,7 +69,7 @@ stdin.on( 'data', function( key ){
     io.emit('pulse', { 
       name: 'ball'
     });
-  } else if ( key === '2') {
+  } else if ( key === 'w') {
     console.log("PULSAR: Sending long ball...");
     io.emit('pulse', { 
       name: 'ball',
@@ -80,6 +80,27 @@ stdin.on( 'data', function( key ){
     console.log("PULSAR REBOOTING");
     console.log();
     io.emit('pulsar control', {action: "reboot"});
+  } else if ( key === '1' ) {
+    io.emit('pulse', {
+      name: 'flash',
+      target: {
+        row: 1
+      }
+    });
+  } else if ( key === '4' ) {
+    io.emit('pulse', {
+      name: 'flash',
+      target: {
+        row: 2
+      }
+    });
+  } else if ( key === '2' ) {
+    io.emit('pulse', {
+      name: 'flash',
+      target: {
+        col: 2
+      }
+    });
   } else {
     console.log("PULSAR: Flashing... (pressed " + key + ")");
     io.emit('pulse', {name: 'flash'});
