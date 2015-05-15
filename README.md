@@ -29,11 +29,11 @@ then you can build by doing
 
 Point your browser to `localhost:3000`. You can (usually, depending on network conditions) get other computers to connect as well by navigating to the server's ip address on port 3000. 
 
-In the terminal window, press some buttons and watch as everything sorta kinda flashes in time!
+In the server window, press some buttons and watch as everything sorta kinda flashes in time!
 
 Press `ctrl-c` to kill the server.
 
-If you go to the base URL, you will automatically be configured to be the next screen in the grid. You can manually change which grid position a screen is at by using URL arguments. For example, if you wanted to be at grid position `(2, 4)` you would use the URL
+If you go to the base URL, you will automatically be redirected to be the next screen in the grid. You can manually change which grid position a screen is at by using URL arguments. For example, if you wanted to be at grid position `(2, 4)` you would use the URL
 
     localhost:3000/?col=2&row=4
 
@@ -72,19 +72,19 @@ Drawing.prototype.done = function () {
 module.exports = Drawing;
 ```
 
-To have the drawing activated on client machines, get `index.js` to emit a `pulsar` io event. If you wanted to activate the `flash` drawing you would do:
-
-```JavaScript
-io.emit('pulse', { 
-  name: 'flash',
-  // Other configuration options here.
-  // This whole object is passed to the 
-  // drawing constructor
-});
-```
-
 Make sure the drawing is referenced in `Processor.js` or browserify will not include it in the bundle. 
 
 ```JavaScript
 require('./pulses/name-of-drawing.js');
+```
+
+Then, to have the drawing activated on client machines, get `index.js` to emit a `pulsar` io event.
+
+```JavaScript
+io.emit('pulse', { 
+  name: 'name-of-drawing',
+  // Other configuration options here.
+  // This whole object is passed to the 
+  // drawing constructor
+});
 ```
