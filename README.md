@@ -39,23 +39,35 @@ If you go to the base URL, you will automatically be configured to be the next s
 
 ## Make your own drawings
 
-To make your own drawings, you need to build a class with a prototype like this:
+Making your own drawings is a bit like making a [p5.js](http://p5js.org/)/[Processing](https://processing.org/) sketch. There is a setup function (called when the drawing is activated initially), and a draw function (called every frame). Additionally, PULSAR drawings expose another function that indicate whether or not they have finished drawing, allowing the whole drawing to be garbage collected. 
+
+To make your own drawings, you need to build an object with prototype like this:
 
 ```JavaScript
+// This prototype must be saved at src/pulses/name-of-drawing.js
 var Drawing = function (pulse) {
-  // the pulse object contains information to customise the drawing
-  // this drawing will only be used if pulse.name === name-of-drawing
-  // This prototype must be saved at src/pulses/name-of-drawing.js
-  // Do your setup stuff here
+  // The pulse object contains information to customise the drawing.
+  // This drawing will only be used if pulse.name === name-of-drawing
+  // Do your setup stuff here. For example, set up a frame counter to 
+  // track how many frames this has been run for. 
+  this.framesLeft = 50;
 };
 Drawing.prototype.draw = function (p) {
   // p is the p5 object. This function is called every frame. 
-  // Do all your frme by frame drawing here.
+  // Do all your frame by frame drawing here.
+  // If you wanted to draw a rectangle in the middle of the screen
+  // you would do the following:
+  p.rect(p.windowWidth/2, p.windowHeight/2, 50, 50);
+  this.framesLeft--;
 };
 Drawing.prototype.done = function () {
-  return true;
   // Return true if this drawing is finished. It will then be cleaned up by
   // the drawing manager. Otherwise return false if you want to keep drawing frames
+  if (this.framesLeft <= 0) {
+    return true;
+  } else {
+    return false;
+  }
 }
 module.exports = Drawing;
 ```
@@ -71,7 +83,7 @@ io.emit('pulse', {
 });
 ```
 
-Make sure the drawing is referenced in `Processor.js` or browserify will not include it. 
+Make sure the drawing is referenced in `Processor.js` or browserify will not include it in the bundle. 
 
 ```JavaScript
 require('./pulses/name-of-drawing.js');
