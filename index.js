@@ -9,8 +9,8 @@ app.set('views', './pages');
 app.set('view engine', 'jade');
 
 app.get('/', function(req, res){
-  var totalCols = 4;
-  var totalRows = 2;
+  var totalCols = 6;
+  var totalRows = 4;
 
   var config = {
     id: nextId,
