@@ -103,7 +103,8 @@ stdin.on( 'data', function( key ){
     });
   } else if ( key === 's' ) {
     io.emit('pulse', {
-      name: 'stars',
+      name: 'starburst',
+      framesLeft: 10
     });
   } else {
     console.log("PULSAR: Flashing... (pressed " + key + ")");

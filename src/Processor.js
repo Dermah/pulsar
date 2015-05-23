@@ -1,11 +1,11 @@
 require('./pulses/flash.js');
 require('./pulses/ball.js');
 require('./pulses/pulsar-splash.js');
-require('./pulses/stars.js');
+require('./pulses/starburst.js');
 
 var Processor = function () {};
 
-Processor.prototype.createDrawing = function (pulse, config) {
+Processor.prototype.createDrawing = function (p5, pulse, config) {
   if (pulse.target) {
     for (var key in pulse.target) {
       if (config.hasOwnProperty(key) && config[key] === pulse.target[key]) {
@@ -20,7 +20,7 @@ Processor.prototype.createDrawing = function (pulse, config) {
   }
 
   var Drawing = require('./pulses/' + pulse.name + '.js');
-  var drawing = new Drawing(pulse, config);
+  var drawing = new Drawing(p5, pulse, config);
 
   return drawing;
 }

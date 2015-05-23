@@ -1,16 +1,20 @@
-var Drawing = function (pulse, config) {
-  pulse.framesLeft = 1000;
+var Drawing = function (p, pulse, config) {
+  var defaults = {};
+  defaults.framesLeft = 1000;
 
-  pulse.points = [];
-  pulse.totalPoints = 1000;
-  pulse.newPointBox = 350;
+  defaults.points = [];
+  defaults.totalPoints = 1000;
+  defaults.newPointBox = 350;
 
-  pulse.config = config;
-  this.pulse = pulse;
+  defaults.config = config;
+
+  p.pulsar.merge(defaults, pulse);
+
+  this.pulse = defaults;
 
   // generate initial point field
-  for (var currentPoint = 0; currentPoint < pulse.totalPoints; currentPoint++) {
-    pulse.points[currentPoint] = this.generateNewPoint();
+  for (var currentPoint = 0; currentPoint < this.pulse.totalPoints; currentPoint++) {
+    this.pulse.points[currentPoint] = this.generateNewPoint();
   }
 };
 

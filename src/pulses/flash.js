@@ -1,4 +1,4 @@
-var Drawing = function (pulse) {
+var Drawing = function (p5, pulse) {
 	pulse.framesLeft = 15;
     console.log(pulse);
   if (!pulse.r) {

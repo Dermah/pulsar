@@ -4,6 +4,14 @@ var p5 = require('p5');
 pulsar.config = pulsarInitConfig;
 pulsarInitConfig = undefined;
 
+// pulsar utils
+p5.pulsar = {};
+p5.pulsar.merge = function(defaults, pulse) {
+  for (var attribute in pulse) { 
+    defaults[attribute] = pulse[attribute]; 
+  }
+}
+
 pulsar.sketch = function (p) {
 
   var Receiver = require('./Receiver.js');
@@ -23,7 +31,7 @@ pulsar.sketch = function (p) {
 
     receiver.on('pulse', function(data) {
       console.log("Pulsar: received: " + data);
-      var drawing = processor.createDrawing(data, pulsar.config);
+      var drawing = processor.createDrawing(p5, data, pulsar.config);
       if (drawing) {
         dM.add(drawing);
       }
@@ -36,7 +44,7 @@ pulsar.sketch = function (p) {
 
     p.createCanvas(p.windowWidth, p.windowHeight);
 
-    dM.add(processor.createDrawing({name: 'pulsar-splash', version: pulsar.version}));
+    dM.add(processor.createDrawing(p5, {name: 'pulsar-splash', version: pulsar.version}));
   }
 
   p.draw = function() {
