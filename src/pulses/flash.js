@@ -1,17 +1,14 @@
 var Drawing = function (p5, pulse) {
-	pulse.framesLeft = 15;
-    console.log(pulse);
-  if (!pulse.r) {
-    pulse.r = 255;
+	var defaults = {
+    framesLeft: 15,
+    r: 255,
+    g: 255,
+    b: 255
   }
-  if (!pulse.g) {
-    pulse.g = 255;
-  }
-  if (!pulse.b) {
-    pulse.b = 255;
-  }
+  
+  p5.pulsar.merge(defaults, pulse);
 
-	this.pulse = pulse;
+	this.pulse = defaults;
 };
 
 Drawing.prototype.draw = function (p) {
