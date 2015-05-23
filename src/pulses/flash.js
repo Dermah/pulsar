@@ -1,30 +1,36 @@
 var Drawing = function (p5, pulse) {
 	var defaults = {
-    framesLeft: 15,
+    totalFrames: 15,
     r: 255,
     g: 255,
     b: 255
   }
   
+
   p5.pulsar.merge(defaults, pulse);
 
+  defaults.framesLeft = defaults.totalFrames;
+  
 	this.pulse = defaults;
 };
 
 Drawing.prototype.draw = function (p) {
+  var self = this;
+  var pulse = self.pulse;
+
   p.rectMode(p.CORNER);
 
 
 
   p.fill('rgba(' + 
-    this.pulse.r + ',' +
-    this.pulse.g + ',' +
-    this.pulse.b + ',' + 
-    ((this.pulse.framesLeft)/15) + ')');
+    pulse.r + ',' +
+    pulse.g + ',' +
+    pulse.b + ',' + 
+    ((pulse.framesLeft)/pulse.totalFrames) + ')');
   
   p.rect(0, 0, p.windowWidth, p.windowHeight);
 
-  this.pulse.framesLeft--;
+  pulse.framesLeft--;
   
 };
 
