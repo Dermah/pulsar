@@ -10,9 +10,15 @@ var Drawing = function (p, pulse, config) {
   defaults.config = config;
   defaults.gridWidth = config.totalCols * p.width;
   defaults.gridHeight = config.totalRows * p.height;
+  
+  defaults.longEdge = defaults.gridWidth;
+  if (defaults.gridHeight > defaults.longEdge) defaults.longEdge = gridHeight;
 
   defaults.xOffset = (config.col - 1) * p.width;
   defaults.yOffset = (config.row - 2) * p.height;
+
+  defaults.rotationX = 0;
+  defaults.rotationY = 0;
 
   p.pulsar.merge(defaults, pulse);
 
@@ -35,7 +41,7 @@ Drawing.prototype.draw = function (p) {
   // field relative to each screen
 
   p.push();
-  p.translate(pulse.gridWidth/2 - pulse.xOffset, pulse.gridHeight/2 + pulse.yOffset);
+  p.translate(pulse.gridWidth/2 - pulse.xOffset + pulse.rotationX, pulse.gridHeight/2 + pulse.yOffset + pulse.rotationY);
   p.rotate(pulse.finalRotation * (pulse.framesLeft - pulse.totalFrames)/pulse.totalFrames);
 
   p.fill(255)
@@ -48,18 +54,6 @@ Drawing.prototype.draw = function (p) {
     p.strokeWeight(4);
     p.stroke(255, currentPoint);
     p.point(point.x, point.y);
-
-    // update point position
-    //pulse.points[currentPoint] = {
-    //  x: point.x + (point.x) / 75, 
-    //  y: point.y + (point.y) / 75
-    //}
-
-    // reset position if outside the grid
-    //if ((point.x < -pulse.gridWidth) || (point.x > pulse.gridWidth) ||
-    //   (point.y < -pulse.gridHeight) || (point.y > pulse.gridHeight)) {
-    //  pulse.points[currentPoint] = this.generateNewPoint();
-    //}
   }
   p.pop();
 
@@ -69,8 +63,8 @@ Drawing.prototype.draw = function (p) {
 Drawing.prototype.generateNewPoint = function() {
   var pulse = this.pulse;
   return {
-    x: Math.floor(Math.random() * (2*pulse.gridWidth)) - pulse.gridWidth,
-    y: Math.floor(Math.random() * (2*pulse.gridHeight)) - pulse.gridHeight
+    x: Math.floor(Math.random() * (2*(pulse.longEdge))) - (pulse.longEdge),
+    y: Math.floor(Math.random() * (2*(pulse.longEdge))) - (pulse.longEdge)
   } 
 }
 
