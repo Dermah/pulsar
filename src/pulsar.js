@@ -44,6 +44,11 @@ pulsar.sketch = function (p) {
       processor.processControl(data, pulsar.config);
     });
 
+    receiver.on('pulse update', function(data) {
+      console.log("Pulsar: update requested: " + data);
+      dM.update(data, pulsar.config);
+    });
+
     p.createCanvas(p.windowWidth, p.windowHeight);
 
     dM.add(processor.createDrawing(p, {name: 'pulsar-splash', version: pulsar.version}));
