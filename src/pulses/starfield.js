@@ -44,10 +44,6 @@ Drawing.prototype.draw = function (p) {
   p.translate(pulse.gridWidth/2 - pulse.xOffset + pulse.rotationX, pulse.gridHeight/2 + pulse.yOffset + pulse.rotationY);
   p.rotate(pulse.finalRotation * (pulse.framesLeft - pulse.totalFrames)/pulse.totalFrames);
 
-  p.fill(255)
-  p.rectMode(p.CENTER);
-  p.rect(0, 0, 50, 50);
-
   for (var currentPoint = 0; currentPoint < pulse.totalPoints; currentPoint++) {
     var point = pulse.points[currentPoint];
 
@@ -66,6 +62,10 @@ Drawing.prototype.generateNewPoint = function() {
     x: Math.floor(Math.random() * (2*(pulse.longEdge))) - (pulse.longEdge),
     y: Math.floor(Math.random() * (2*(pulse.longEdge))) - (pulse.longEdge)
   } 
+}
+
+Drawing.prototype.update = function (p, pulse, config) {
+  p.pulsar.merge(this.pulse, pulse);
 }
 
 Drawing.prototype.done = function () {

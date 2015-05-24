@@ -112,6 +112,13 @@ stdin.on( 'data', function( key ){
     io.emit('pulse', {
       name: 'starfield',
     });
+  } else if ( key === ',' ) {
+    console.log("PULSAR: UPDATING STARFIELD *");
+    io.emit('pulse update', {
+      name: 'starfield',
+      rotationX: (Math.random() * (500)) - 250 ,
+      rotationY: (Math.random() * (500)) - 250,
+    });
   } else {
     console.log("PULSAR: Flashing... (pressed " + key + ")");
     io.emit('pulse', {name: 'flash'});
