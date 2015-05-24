@@ -27,6 +27,7 @@ pulsar.sketch = function (p) {
   var versionTag = pulsar.name.toUpperCase() + "(" + pulsar.config.col + ", " + pulsar.config.row + ") - v" + pulsar.version;
 
   p.setup = function() {
+    p.noCursor();
     p.frameRate(30);
     receiver.connect();
 
