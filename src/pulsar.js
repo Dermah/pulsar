@@ -58,7 +58,6 @@ pulsar.sketch = function (p) {
     p.noStroke();
     p.background(0);
 
-    
     dM.drawAll();
 
     p.textSize(15);

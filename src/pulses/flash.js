@@ -20,8 +20,6 @@ Drawing.prototype.draw = function (p) {
 
   p.rectMode(p.CORNER);
 
-
-
   p.fill('rgba(' + 
     pulse.r + ',' +
     pulse.g + ',' +

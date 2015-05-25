@@ -12,7 +12,7 @@ var Drawing = function (p, pulse, config) {
   defaults.gridHeight = config.totalRows * p.height;
   
   defaults.longEdge = defaults.gridWidth;
-  if (defaults.gridHeight > defaults.longEdge) defaults.longEdge = gridHeight;
+  if (defaults.gridHeight > defaults.longEdge) defaults.longEdge = defaults.gridHeight;
 
   defaults.xOffset = (config.col - 1) * p.width;
   defaults.yOffset = (config.row - 2) * p.height;
