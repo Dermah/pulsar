@@ -119,6 +119,11 @@ stdin.on( 'data', function( key ){
       rotationX: (Math.random() * (500)) - 250 ,
       rotationY: (Math.random() * (500)) - 250,
     });
+  } else if ( key === '=' ) {
+    console.log("PULSAR: Strobing");
+    io.emit('pulse', {
+      name: 'strobe'
+    });
   } else {
     console.log("PULSAR: Flashing... (pressed " + key + ")");
     io.emit('pulse', {name: 'flash'});
