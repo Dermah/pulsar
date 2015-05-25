@@ -1,8 +1,8 @@
 var Drawing = function (p5, pulse) {
   var defaults = {
-    totalFrames: 15,
-    framesOn: 2,
-    framesOff: 2,
+    totalFrames: 100,
+    framesOn: 1,
+    framesOff: 1,
     probability: 1,
     r: 255,
     g: 255,
@@ -20,13 +20,20 @@ Drawing.prototype.draw = function (p) {
   var self = this;
   var pulse = self.pulse;
 
-  if (pulse.framesLeft % 2 === 0) {
+  var modFrame = pulse.framesLeft % (pulse.framesOn + pulse.framesOff);
+  if (modFrame >= pulse.framesOff) {
+    if (modFrame === (pulse.framesOn + pulse.framesOff - 1)) {
+      if (Math.random() >= (1 - pulse.probability)) {
+        pulse.on = true;
+      }
+    }
+  } else {
+    pulse.on = false;
+  }
+
+  if (pulse.on) {
     p.rectMode(p.CORNER);
-    p.fill('rgba(' + 
-      pulse.r + ',' +
-      pulse.g + ',' +
-      pulse.b + ',' + 
-      ((pulse.framesLeft)/pulse.totalFrames) + ')');
+    p.fill(pulse.r, pulse.g, pulse.b);
     p.rect(0, 0, p.windowWidth, p.windowHeight);
   }
   
