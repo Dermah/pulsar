@@ -101,13 +101,16 @@ stdin.on( 'data', function( key ){
     console.log("PULSAR: UPDATING STARFIELD *");
     io.emit('pulse update', {
       name: 'starfield',
-      rotationX: (Math.random() * (500)) - 250 ,
-      rotationY: (Math.random() * (500)) - 250,
+      rotationX: (Math.random() * (4000)) - 250,
+      rotationY: (Math.random() * (4000)) - 250,
+      finalRotation: (Math.random() * (4*Math.PI) - Math.PI),
+      framesLeft: 1000
     });
   } else if ( key === '=' ) {
     console.log("PULSAR: Strobing");
     io.emit('pulse', {
-      name: 'strobe'
+      name: 'strobe',
+      probability: 0.1
     });
   } else {
     console.log("PULSAR: Flashing... (pressed " + key + ")");
