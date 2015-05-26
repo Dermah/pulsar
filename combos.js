@@ -1,8 +1,6 @@
 var io;
 var Combos = function (theIO) {
   io = theIO;
-  console.log("Got");
-  console.log(io);
 };
 
 Combos.prototype.randomFlash = function() {
@@ -23,14 +21,25 @@ Combos.prototype.flashRow = function(row) {
   });
 }
 
-Combos.prototype.flashColumn = function(row) {
+Combos.prototype.flashColumn = function(column) {
   io.emit('pulse', {
     name: 'flash',
     target: {
-      row: 3,
-      column: 1
+      col: column
     }
   });
+}
+
+Combos.prototype.flashUp = function(rate) {
+  var self = this;
+  var march = function(rate) {
+    setTimeout(self.flashRow,      0, 1);
+    setTimeout(self.flashRow,   rate, 2);
+    setTimeout(self.flashRow, 2*rate, 3);
+    setTimeout(self.flashRow, 3*rate, 4);
+  };
+  march(rate);
+  setInterval(march, 4*rate, rate);
 }
 
 module.exports = Combos;

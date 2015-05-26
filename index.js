@@ -86,7 +86,7 @@ stdin.on( 'data', function( key ){
   } else if ( key === '7' ) {
     combo.flashRow(1);
   } else if ( key === '5' ) {
-    combo.flashColumn(1);
+    combo.flashUp(200);
   } else if ( key === 's' ) {
     console.log("PULSAR: Sending starburst ****");
     io.emit('pulse', {
