@@ -60,12 +60,7 @@ stdin.on( 'data', function( key ){
     process.exit();
   } else if ( key === 'c') {
     console.log("PULSAR: Random colour...");
-    io.emit('pulse', { 
-      name: 'flash',
-      r: Math.floor(Math.random() * 255),
-      g: Math.floor(Math.random() * 255),
-      b: Math.floor(Math.random() * 255)
-    });
+    combo.randomFlash();
   } else if ( key === 'b') {
     console.log("PULSAR: Sending ball...");
     io.emit('pulse', { 
@@ -82,32 +77,20 @@ stdin.on( 'data', function( key ){
     console.log("PULSAR REBOOTING");
     console.log();
     io.emit('pulsar control', {action: "reboot"});
+  } else if ( key === '0' ) {
+    combo.flashRow(4);
   } else if ( key === '1' ) {
-    io.emit('pulse', {
-      name: 'flash',
-      target: {
-        row: 1
-      }
-    });
+    combo.flashRow(3);
   } else if ( key === '4' ) {
-    io.emit('pulse', {
-      name: 'flash',
-      target: {
-        row: 2
-      }
-    });
-  } else if ( key === '2' ) {
-    io.emit('pulse', {
-      name: 'flash',
-      target: {
-        col: 2
-      }
-    });
+    combo.flashRow(2);
+  } else if ( key === '7' ) {
+    combo.flashRow(1);
+  } else if ( key === '5' ) {
+    combo.flashColumn(1);
   } else if ( key === 's' ) {
     console.log("PULSAR: Sending starburst ****");
     io.emit('pulse', {
       name: 'starburst',
-      framesLeft: 3000
     });
   } else if ( key === '.' ) {
     console.log("PULSAR: Sending starfield *");
