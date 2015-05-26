@@ -26,13 +26,13 @@ Drawing.prototype.draw = function (p) {
   pulse.gridHeight = pulse.config.totalRows * p.height;
 
   pulse.xOffset = (pulse.config.col - 1) * p.width;
-  pulse.yOffset = (pulse.config.row - 2) * p.height;
+  pulse.yOffset = (pulse.config.row - 1) * p.height;
 
   // translate the origin into the middle of the pulsar grid
   // the above offsets are then used to translate the 
   // field relative to each screen
   p.push();
-  p.translate(pulse.gridWidth/2 - pulse.xOffset, pulse.gridHeight/2 + pulse.yOffset);
+  p.translate(pulse.gridWidth/2 - pulse.xOffset, pulse.gridHeight/2 - pulse.yOffset);
   for (var currentPoint = 0; currentPoint < pulse.totalPoints; currentPoint++) {
     var point = pulse.points[currentPoint];
 

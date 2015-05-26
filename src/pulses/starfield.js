@@ -41,7 +41,7 @@ Drawing.prototype.draw = function (p) {
   // field relative to each screen
 
   p.push();
-  p.translate(pulse.gridWidth/2 - pulse.xOffset + pulse.rotationX, pulse.gridHeight/2 + pulse.yOffset + pulse.rotationY);
+  p.translate(pulse.gridWidth/2 - pulse.xOffset + pulse.rotationX, pulse.gridHeight/2 - pulse.yOffset - pulse.rotationY);
   p.rotate(pulse.finalRotation * (pulse.framesLeft - pulse.totalFrames)/pulse.totalFrames);
 
   for (var currentPoint = 0; currentPoint < pulse.totalPoints; currentPoint++) {
