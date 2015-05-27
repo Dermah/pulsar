@@ -12,6 +12,10 @@ var Drawing = function (p5, pulse) {
   defaults.framesLeft = defaults.totalFrames;
   
   this.pulse = defaults;
+
+  if (Math.random() < (1 - this.pulse.probability)) {
+    this.pulse.framesLeft = 0;
+  }
 };
 
 Drawing.prototype.draw = function (p) {
