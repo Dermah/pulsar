@@ -92,6 +92,20 @@ stdin.on( 'data', function( key ){
     io.emit('pulse', {
       name: 'starburst',
     });
+  } else if ( key === 'k' ) {
+    console.log("PULSAR: Sending atmos");
+    combo.atmospheric();
+  } else if ( key === 'l' ) {
+    console.log("PULSAR: Sending gloc");
+    io.emit('pulse', {
+      name: 'bars',
+      h: 0.33,
+      w: 1,
+      y: 0.17,
+      r: 23,
+      g: 16,
+      b: 200
+    });
   } else if ( key === '.' ) {
     console.log("PULSAR: Sending starfield *");
     io.emit('pulse', {
