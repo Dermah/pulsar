@@ -42,4 +42,23 @@ Combos.prototype.flashUp = function(rate) {
   setInterval(march, 4*rate, rate);
 }
 
+Combos.prototype.atmospheric = function () {
+  var emitall = function() {
+    io.emit('pulse', {
+      name: 'fade',
+      totalFrames: 6,
+      r: Math.ceil(Math.random()*255),
+      g: Math.ceil(Math.random()*255),
+      b: Math.ceil(Math.random()*255),
+      probability: 0.1,
+      target: {
+        col: Math.ceil(Math.random()*6),
+        row: Math.ceil(Math.random()*4),
+      }
+    });
+  };
+  emitall();
+  setInterval(emitall, 20)
+}
+
 module.exports = Combos;
