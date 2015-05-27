@@ -5,6 +5,7 @@ require('./pulses/starburst.js');
 require('./pulses/starfield.js');
 require('./pulses/strobe.js');
 require('./pulses/fade.js');
+require('./pulses/bars.js');
 
 var Processor = function () {};
 
