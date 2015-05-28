@@ -58,4 +58,19 @@ Combos.prototype.atmospheric = function (length) {
   setTimeout(clearInterval, length, atmos);
 }
 
+Combos.prototype.glock3 = function (note) {
+  // note should be number 1 to 3
+
+  var offset = (note - 2) * 0.333333333;
+
+  io.emit('pulse', {
+    name: 'bars',
+    totalFrames: 8,
+    x: 0.5,
+    w: 1,
+    y: 0.5 + offset,
+    h: 0.33333
+  });
+}
+
 module.exports = Combos;
