@@ -4,10 +4,13 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var Combos = require('./combos.js');
 var combo = new Combos(io);
+var child = require('child_process');
 var recorder = require('./recorder.js');
 var player = require('./player.js');
 
 var nextId = 0;
+var songPath = "./starkey.mp3"
+var song;
 
 app.set('views', './pages');
 app.set('view engine', 'jade');
@@ -63,13 +66,15 @@ var processKey = function( key ){
          key !== ']' && 
          key !== '{' &&
          key !== '}') {
-      console.log("LOGGED");
       recorder.log(key);
     }
   }
   // ctrl-c ( end of text )
   if ( key === '\u0003' ) {
     console.log("PULSAR: Exiting...");
+    if (song) {
+      song.kill("SIGTERM");
+    }
     process.exit();
   } else if ( key === 'c') {
     console.log("PULSAR: Random colour...");
@@ -151,6 +156,25 @@ var processKey = function( key ){
   } else if ( key === '[' ) {
     console.log("PULSAR: Playing from file");
     player.play();
+  } else if ( key === '\u001b[18~' ) {
+    console.log("PULSAR: PLAYING AUDIO");
+    if (process.platform == 'darwin') {
+      song = child.exec("afplay " + songPath, function (error, stdout, stderr) {
+        console.log('stdout: ' + stdout);
+        console.log('stderr: ' + stderr);
+        if (error !== null) {
+          console.log('exec error: ' + error);
+        }
+      });
+    } else if (process.platform == 'win32') {
+      song = child.exec("mplayer.exe -quiet " + songPath, function (error, stdout, stderr) {
+          console.log('stdout: ' + stdout);
+          console.log('stderr: ' + stderr);
+          if (error !== null) {
+            console.log('exec error: ' + error);
+          }
+      })
+    }
   } else {
     console.log("PULSAR: Flashing... (pressed " + key + ")");
     io.emit('pulse', {name: 'flash'});
