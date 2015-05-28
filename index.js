@@ -126,6 +126,8 @@ stdin.on( 'data', function( key ){
       name: 'strobe',
       probability: 0.1
     });
+  } else if ( key === '\u001b[18~' ) {
+    console.log("PULSAR: PLAYING AUDIO");
   } else {
     console.log("PULSAR: Flashing... (pressed " + key + ")");
     io.emit('pulse', {name: 'flash'});
