@@ -5,6 +5,7 @@ var io = require('socket.io')(http);
 var Combos = require('./combos.js');
 var combo = new Combos(io);
 var recorder = require('./recorder.js');
+var player = require('./player.js');
 
 var nextId = 0;
 
@@ -57,7 +58,13 @@ stdin.setEncoding('utf8');
 stdin.on( 'data', function( key ){
 
   if ( recorder.recording ) {
-    recorder.log(key);
+    if ( key !== '[' &&
+         key !== ']' && 
+         key !== '{' &&
+         key !== '}') {
+      console.log("LOGGED");
+      recorder.log(key);
+    }
   }
   // ctrl-c ( end of text )
   if ( key === '\u0003' ) {
@@ -131,12 +138,17 @@ stdin.on( 'data', function( key ){
       name: 'strobe',
       probability: 0.1
     });
-  } else if ( key === ']' ) {
+  } else if ( key === '}' ) {
     console.log("PULSAR: Starting timer");
     recorder.startTimer();
+  } else if ( key === '{' ) {
+    recorder.dump('./PULSARLOG.json');
+  } else if ( key === ']' ) {
+    console.log("PULSAR: Loading from file");
+    player.openLog('./PULSARLOG.json');
+    recorder.startTimer();
   } else if ( key === '[' ) {
-    recorder.timeElapsed();
-    recorder.dump();
+    console.log("PULSAR: Playing from file");
   } else {
     console.log("PULSAR: Flashing... (pressed " + key + ")");
     io.emit('pulse', {name: 'flash'});
