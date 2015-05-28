@@ -1,24 +1,23 @@
 var jf = require('jsonfile');
+var events = require("events");
 
 var Player = function () {
 };
 
+Player.prototype = new events.EventEmitter;
 
 Player.prototype.openLog = function(location) {
   this.keystrokes = jf.readFileSync(location);
-  console.log(this.keystrokes);
 }
 
-Player.prototype.dump = function (location) {
-  jf.writeFile(location, this.keystrokes, function(err) {
-    if (err) {
-      console.log("ERROR DUMPING KEYSTROKE LOG at " + location);
-      console.log(err);
-    } else {
-      console.log("Dump to " + location + " complete");
-    }
-  });
-  
+Player.prototype.play = function () {
+  var self = this;
+  for (var i = 0; i < self.keystrokes.length; i++) {
+    var key = self.keystrokes[i].key;
+    setTimeout(function(key) {
+      self.emit('press', key);
+    }, self.keystrokes[i].time, key);
+  };
 }
 
 module.exports = new Player();

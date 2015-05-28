@@ -51,8 +51,13 @@ http.listen(3000, function(){
   console.log('SERVER: listening on *:3000');
 });
 
-var processKey = function( key ){
 
+var stdin = process.stdin;
+stdin.setRawMode(true);
+stdin.resume();
+stdin.setEncoding('utf8');
+
+var processKey = function( key ){
   if ( recorder.recording ) {
     if ( key !== '[' &&
          key !== ']' && 
@@ -145,15 +150,12 @@ var processKey = function( key ){
     recorder.startTimer();
   } else if ( key === '[' ) {
     console.log("PULSAR: Playing from file");
+    player.play();
   } else {
     console.log("PULSAR: Flashing... (pressed " + key + ")");
     io.emit('pulse', {name: 'flash'});
   }
 }
 
-var stdin = process.stdin;
-stdin.setRawMode(true);
-stdin.resume();
-stdin.setEncoding('utf8');
 stdin.on( 'data', processKey);
-
+player.on( 'press', processKey);
