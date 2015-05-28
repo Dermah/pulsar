@@ -60,6 +60,9 @@ stdin.on( 'data', function( key ){
   // ctrl-c ( end of text )
   if ( key === '\u0003' ) {
     console.log("PULSAR: Exiting...");
+    if (song) {
+      song.kill("SIGTERM");
+    }
     process.exit();
   } else if ( key === 'c') {
     console.log("PULSAR: Random colour...");
