@@ -1,3 +1,5 @@
+var jf = require('jsonfile');
+
 var Recorder = function () {
   this.keystrokes = [];
   this.recording = false;
@@ -22,8 +24,16 @@ Recorder.prototype.log = function (key) {
   });
 }
 
-Recorder.prototype.dump = function () {
-  console.log(this.keystrokes);
+Recorder.prototype.dump = function (location) {
+  jf.writeFile(location, this.keystrokes, function(err) {
+    if (err) {
+      console.log("ERROR DUMPING KEYSTROKE LOG at " + location);
+      console.log(err);
+    } else {
+      console.log("Dump to " + location + " complete");
+    }
+  });
+  
 }
 
 module.exports = new Recorder();
