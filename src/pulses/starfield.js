@@ -46,8 +46,8 @@ Drawing.prototype.draw = function (p) {
 
   for (var currentPoint = 0; currentPoint < pulse.totalPoints; currentPoint++) {
     var point = pulse.points[currentPoint];
-
-    p.strokeWeight(4);
+    p.fill(255);
+    p.strokeWeight(currentPoint % 16 + 16);
     p.stroke(255, currentPoint);
     p.point(point.x, point.y);
   }
