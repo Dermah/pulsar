@@ -42,7 +42,7 @@ Combos.prototype.flashUp = function(rate) {
   setInterval(march, 4*rate, rate);
 }
 
-Combos.prototype.atmospheric = function () {
+Combos.prototype.atmospheric = function (length) {
   var emitall = function() {
     io.emit('pulse', {
       name: 'fade',
@@ -54,7 +54,8 @@ Combos.prototype.atmospheric = function () {
     });
   };
   emitall();
-  setInterval(emitall, 40)
+  var atmos = setInterval(emitall, 40)
+  setTimeout(clearInterval, length, atmos);
 }
 
 module.exports = Combos;
