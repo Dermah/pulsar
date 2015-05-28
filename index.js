@@ -4,6 +4,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var Combos = require('./combos.js');
 var combo = new Combos(io);
+var recorder = require('./recorder.js');
 
 var nextId = 0;
 
@@ -54,6 +55,10 @@ stdin.setRawMode(true);
 stdin.resume();
 stdin.setEncoding('utf8');
 stdin.on( 'data', function( key ){
+
+  if ( recorder.recording ) {
+    recorder.log(key);
+  }
   // ctrl-c ( end of text )
   if ( key === '\u0003' ) {
     console.log("PULSAR: Exiting...");
@@ -126,6 +131,12 @@ stdin.on( 'data', function( key ){
       name: 'strobe',
       probability: 0.1
     });
+  } else if ( key === ']' ) {
+    console.log("PULSAR: Starting timer");
+    recorder.startTimer();
+  } else if ( key === '[' ) {
+    recorder.timeElapsed();
+    recorder.dump();
   } else {
     console.log("PULSAR: Flashing... (pressed " + key + ")");
     io.emit('pulse', {name: 'flash'});
