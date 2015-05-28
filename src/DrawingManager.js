@@ -20,4 +20,13 @@ DrawingManager.prototype.drawAll = function () {
   };
 }
 
+DrawingManager.prototype.update = function (pulse, config) {
+  for (var i = drawings.length - 1; i >= 0; i--) {
+    if (drawings[i].pulse.name === pulse.name) {
+      drawings[i].update(p, pulse, config);
+      console.log("UPDATED pulse", drawings[i].pulse.name);
+    }
+  }
+}
+
 module.exports = DrawingManager;
