@@ -6,6 +6,7 @@ require('./pulses/starfield.js');
 require('./pulses/strobe.js');
 require('./pulses/fade.js');
 require('./pulses/bars.js');
+require('./pulses/slider.js');
 
 var Processor = function () {};
 
