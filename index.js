@@ -110,9 +110,6 @@ var processKey = function( key ){
     io.emit('pulse', {
       name: 'starburst',
     });
-  } else if ( key === 'k' ) {
-    console.log("PULSAR: Sending atmos");
-    combo.atmospheric();
   } else if ( key === 'l' ) {
     console.log("PULSAR: Sending gloc");
     io.emit('pulse', {
@@ -175,6 +172,26 @@ var processKey = function( key ){
           }
       })
     }
+  }
+  else if ( key === ' ' ) {
+    // Atmos quiet intro
+    console.log("PULSAR: Sending atmos");
+    combo.atmospheric(40000);
+  } else if ( key === 'B' ) {
+    // Atmos quiet intro
+    console.log("PULSAR: Sending gloc");
+    combo.glock3(3);
+  } else if ( key === 'N' ) {
+    // Atmos quiet intro
+    console.log("PULSAR: Sending gloc");
+    combo.glock3(2);
+  } else if ( key === 'M' ) {
+    // Atmos quiet intro
+    console.log("PULSAR: Sending gloc");
+    combo.glock3(1);
+  } else if ( key === 'K' ) {
+    // Atmos quiet intro
+    io.emit('pulse', {name: 'slider'})
   } else {
     console.log("PULSAR: Flashing... (pressed " + key + ")");
     io.emit('pulse', {name: 'flash'});
