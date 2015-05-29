@@ -2,7 +2,10 @@ var Drawing = function (p, pulse, config) {
   var defaults = {};
   defaults.totalFrames = 1000;
 
+  defaults.startRotation = 0;
   defaults.finalRotation = p.PI;
+
+  defaults.scale = 1;
 
   defaults.config = config;
   defaults.gridWidth = config.totalCols * p.width;
@@ -31,8 +34,9 @@ Drawing.prototype.draw = function (p) {
 
   p.push();
   p.translate(pulse.gridWidth/2 - pulse.xOffset + pulse.rotationX, pulse.gridHeight/2 - pulse.yOffset - pulse.rotationY);
-  p.rotate(pulse.finalRotation * (pulse.framesLeft - pulse.totalFrames)/pulse.totalFrames);
-
+  p.rotate(pulse.startRotation + pulse.finalRotation * (pulse.framesLeft - pulse.totalFrames)/pulse.totalFrames);
+  p.scale(pulse.scale, pulse.scale);
+  
   p.imageMode(p.CENTER);
   p.image(p.pulsar.img.astronaut, 0, 0);
 
