@@ -7,6 +7,7 @@ require('./pulses/strobe.js');
 require('./pulses/fade.js');
 require('./pulses/bars.js');
 require('./pulses/slider.js');
+require('./pulses/astronaut.js');
 
 var Processor = function () {};
 
