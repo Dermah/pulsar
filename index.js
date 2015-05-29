@@ -9,7 +9,7 @@ var recorder = require('./recorder.js');
 var player = require('./player.js');
 
 var nextId = 0;
-var songPath = "./starkey.mp3"
+var songPath = "./starkeyShort.mp3"
 var song;
 
 app.set('views', './pages');
@@ -190,8 +190,11 @@ var processKey = function( key ){
     console.log("PULSAR: Sending gloc");
     combo.glock3(1);
   } else if ( key === 'K' ) {
-    // Atmos quiet intro
-    io.emit('pulse', {name: 'slider'})
+    // Breathing style slide pulse
+    combo.slideUpDouble();
+  } else if ( key === '-' ) {
+    // Breathing style slide pulse
+    combo.calmBeforeStorm();
   } else {
     console.log("PULSAR: Flashing... (pressed " + key + ")");
     io.emit('pulse', {name: 'flash'});
