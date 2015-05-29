@@ -66,10 +66,38 @@ Combos.prototype.glock3 = function (note) {
   io.emit('pulse', {
     name: 'bars',
     totalFrames: 8,
+    r: (255),
+    g: (200 - Math.floor(Math.random()*200)),
+    b: (200 - Math.floor(Math.random()*200)),
     x: 0.5,
     w: 1,
     y: 0.5 + offset,
-    h: 0.33333
+    h: 0.33333,
+  });
+}
+
+Combos.prototype.slideUpDouble = function () {
+  var emitter = function(frames) {
+    io.emit('pulse', {
+      name: 'slider',
+      totalFrames: frames
+    });
+  }
+  
+  emitter(22);
+
+  setTimeout(emitter, 750, 25);
+}
+
+Combos.prototype.calmBeforeStorm = function () {
+  io.emit('pulse', {
+    name: 'strobe',
+    totalFrames: 11,
+    framesOn: 10,
+    probability: 0.5,
+    r: 255,
+    g: 100,
+    b: 100
   });
 }
 
