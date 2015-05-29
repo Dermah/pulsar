@@ -13,13 +13,13 @@ var songPath = "./starkeyShort.mp3"
 var song;
 var astronautOn = false;
 
+var totalCols = 6;
+var totalRows = 4;
 
 app.set('views', './pages');
 app.set('view engine', 'jade');
 
 app.get('/', function(req, res){
-  var totalCols = 6;
-  var totalRows = 4;
 
   var config = {
     id: nextId,
