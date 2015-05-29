@@ -11,6 +11,8 @@ var player = require('./player.js');
 var nextId = 0;
 var songPath = "./starkeyShort.mp3"
 var song;
+var astronautOn = false;
+
 
 app.set('views', './pages');
 app.set('view engine', 'jade');
@@ -130,26 +132,29 @@ var processKey = function( key ){
     io.emit('pulse', {
       name: 'starfield',
     });
-    io.emit('pulse', {
-      name: 'astronaut',
-    });
   } else if ( key === ',' ) {
     console.log("PULSAR: UPDATING STARFIELD *");
-    var rotationX = (Math.random() * (4000)) - 250;
-    var rotationY = (Math.random() * (4000)) - 250;
+    var rotationX = (Math.random() * (2*totalCols*1920/4)) - totalCols*1920/4;
+    var rotationY = (Math.random() * (2*totalRows*1080/4)) - totalRows*1080/4;
     var finalRotation = ((Math.random() * (4*Math.PI)) - 2*Math.PI);
     io.emit('pulse update', {
       name: 'starfield',
       rotationX: rotationX,
-      rotationY: rotationY,
+      rotationY: rotationY + (2*totalRows*1080/4),
       finalRotation: finalRotation,
-      framesLeft: 1000,
-      randomColour: 3,
+      framesLeft: 1000
     });
+    if (astronautOn) {
+      io.emit('pulse', {
+        name: 'astronaut',
+      });
+      astronautOn = false;
+    }
     io.emit('pulse update', {
       name: 'astronaut',
       rotationX: rotationX,
-      rotationY: rotationY,
+      rotationY: rotationY + (2*totalRows*1080/4),
+      startRotation: (Math.random() * (4*Math.PI) - 2*Math.PI),
       finalRotation: (Math.random() * (4*Math.PI) - 2*Math.PI),
       framesLeft: 1000
     });
@@ -213,6 +218,8 @@ var processKey = function( key ){
   } else if ( key === '-' ) {
     // Breathing style slide pulse
     combo.calmBeforeStorm();
+  } else if (key === '/' ) {
+    astronautOn = true;
   } else {
     console.log("PULSAR: Flashing... (pressed " + key + ")");
     io.emit('pulse', {name: 'flash'});
