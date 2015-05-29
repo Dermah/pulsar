@@ -46,9 +46,17 @@ Drawing.prototype.draw = function (p) {
 
   for (var currentPoint = 0; currentPoint < pulse.totalPoints; currentPoint++) {
     var point = pulse.points[currentPoint];
-    p.fill(255);
-    p.strokeWeight(currentPoint % 16 + 16);
-    p.stroke(255, currentPoint);
+
+    if (!pulse.randomColour) {
+      p.stroke(255);
+    } else {
+      var rand = Math.floor(Math.random()*15986198417);
+      //console.log(rand)
+      p.stroke(rand*(pulse.randomColour)%255, 
+               rand*(pulse.randomColour*pulse.randomColour)%255, 
+               rand*(pulse.randomColour*pulse.randomColour*pulse.randomColour)%255);
+    }
+    p.strokeWeight(currentPoint % 16 + 8);
     p.point(point.x, point.y);
   }
   p.pop();
