@@ -220,6 +220,9 @@ var processKey = function( key ){
     combo.calmBeforeStorm();
   } else if (key === '/' ) {
     astronautOn = true;
+  } else if (key === '\b' ) {
+    console.log("PULSAR: Delete all drawings");
+    io.emit('pulsar control', {action: "clear"});
   } else {
     console.log("PULSAR: Flashing... (pressed " + key + ")");
     io.emit('pulse', {name: 'flash'});
