@@ -31,9 +31,11 @@ Processor.prototype.createDrawing = function (p5, pulse, config) {
   return drawing;
 }
 
-Processor.prototype.processControl = function (pulse, config) {
+Processor.prototype.processControl = function (pulse, dM, config) {
   if (pulse.action === 'reboot') {
     location.reload();
+  } else if (pulse.action === 'clear') {
+    dM.clear();
   }
 }
 

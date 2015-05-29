@@ -29,4 +29,8 @@ DrawingManager.prototype.update = function (pulse, config) {
   }
 }
 
+DrawingManager.prototype.clear = function () {
+  drawings = [];
+}
+
 module.exports = DrawingManager;

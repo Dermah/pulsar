@@ -46,7 +46,7 @@ pulsar.sketch = function (p) {
 
     receiver.on('pulsar control', function(data) {
       console.log("Pulsar: received: " + data);
-      processor.processControl(data, pulsar.config);
+      processor.processControl(data, dM, pulsar.config);
     });
 
     receiver.on('pulse update', function(data) {
