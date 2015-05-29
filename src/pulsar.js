@@ -26,6 +26,11 @@ pulsar.sketch = function (p) {
 
   var versionTag = pulsar.name.toUpperCase() + "(" + pulsar.config.col + ", " + pulsar.config.row + ") - v" + pulsar.version;
 
+  p.preload = function () {
+    p.pulsar.img = {};
+    p.pulsar.img.astronaut = p.loadImage("astronaut.gif");
+  }
+
   p.setup = function() {
     p.noCursor();
     p.frameRate(30);

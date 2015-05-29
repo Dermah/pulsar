@@ -43,6 +43,10 @@ app.get('/pulsar.js', function(req, res){
   res.sendFile(__dirname + '/dist/pulsar.js');
 });
 
+app.get('/astronaut.gif', function(req, res){
+  res.sendFile(__dirname + '/astronaut.gif');
+});
+
 io.on('connection', function(socket){
   console.log('PULSAR: client connected');
   socket.on('disconnect', function() {
