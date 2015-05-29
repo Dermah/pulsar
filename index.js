@@ -130,13 +130,27 @@ var processKey = function( key ){
     io.emit('pulse', {
       name: 'starfield',
     });
+    io.emit('pulse', {
+      name: 'astronaut',
+    });
   } else if ( key === ',' ) {
     console.log("PULSAR: UPDATING STARFIELD *");
+    var rotationX = (Math.random() * (4000)) - 250;
+    var rotationY = (Math.random() * (4000)) - 250;
+    var finalRotation = ((Math.random() * (4*Math.PI)) - 2*Math.PI);
     io.emit('pulse update', {
       name: 'starfield',
-      rotationX: (Math.random() * (4000)) - 250,
-      rotationY: (Math.random() * (4000)) - 250,
-      finalRotation: (Math.random() * (4*Math.PI) - Math.PI),
+      rotationX: rotationX,
+      rotationY: rotationY,
+      finalRotation: finalRotation,
+      framesLeft: 1000,
+      randomColour: 3,
+    });
+    io.emit('pulse update', {
+      name: 'astronaut',
+      rotationX: rotationX,
+      rotationY: rotationY,
+      finalRotation: (Math.random() * (4*Math.PI) - 2*Math.PI),
       framesLeft: 1000
     });
   } else if ( key === '=' ) {
