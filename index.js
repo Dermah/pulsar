@@ -12,6 +12,7 @@ var nextId = 0;
 var songPath = "./starkeyShort.mp3"
 var song;
 var astronautOn = false;
+var currentTarget = undefined;
 
 var totalCols = 6;
 var totalRows = 4;
@@ -84,7 +85,7 @@ var processKey = function( key ){
     process.exit();
   } else if ( key === 'c') {
     console.log("PULSAR: Random colour...");
-    combo.randomFlash();
+    combo.randomFlash(currentTarget);
   } else if ( key === 'b') {
     console.log("PULSAR: Sending ball...");
     io.emit('pulse', { 
@@ -129,9 +130,13 @@ var processKey = function( key ){
     });
   } else if ( key === '.' ) {
     console.log("PULSAR: Sending starfield *");
-    io.emit('pulse', {
+    var pulse = {
       name: 'starfield',
-    });
+    }
+    if (currentTarget) {
+      pulse.target = currentTarget;
+    }
+    io.emit('pulse', pulse);
   } else if ( key === ',' ) {
     console.log("PULSAR: UPDATING STARFIELD *");
     var rotationX = (Math.random() * (2*totalCols*1920/4)) - totalCols*1920/4;
@@ -145,9 +150,13 @@ var processKey = function( key ){
       framesLeft: 1000
     });
     if (astronautOn) {
-      io.emit('pulse', {
+      var pulse = {
         name: 'astronaut',
-      });
+      }
+      if (currentTarget) {
+        pulse.target = currentTarget;
+      }
+      io.emit('pulse', pulse);
       astronautOn = false;
     }
     io.emit('pulse update', {
@@ -159,11 +168,15 @@ var processKey = function( key ){
       framesLeft: 1000
     });
   } else if ( key === '=' ) {
-    console.log("PULSAR: Strobing");
-    io.emit('pulse', {
+    var pulse = {
       name: 'strobe',
       probability: 0.1
-    });
+    }
+    if (currentTarget) {
+      pulse.target = currentTarget;
+    }
+    console.log("PULSAR: Strobing");
+    io.emit('pulse', pulse);
   } else if ( key === '}' ) {
     console.log("PULSAR: Starting timer");
     recorder.startTimer();
@@ -199,33 +212,52 @@ var processKey = function( key ){
   else if ( key === ' ' ) {
     // Atmos quiet intro
     console.log("PULSAR: Sending atmos");
-    combo.atmospheric(40000);
+    combo.atmospheric(40000, currentTarget);
   } else if ( key === 'B' ) {
     // Atmos quiet intro
     console.log("PULSAR: Sending gloc");
-    combo.glock3(3);
+    combo.glock3(3, currentTarget);
   } else if ( key === 'N' ) {
     // Atmos quiet intro
     console.log("PULSAR: Sending gloc");
-    combo.glock3(2);
+    combo.glock3(2, currentTarget);
   } else if ( key === 'M' ) {
     // Atmos quiet intro
     console.log("PULSAR: Sending gloc");
-    combo.glock3(1);
+    combo.glock3(1, currentTarget);
   } else if ( key === 'K' ) {
     // Breathing style slide pulse
-    combo.slideUpDouble();
+    combo.slideUpDouble(currentTarget);
   } else if ( key === '-' ) {
     // Breathing style slide pulse
-    combo.calmBeforeStorm();
+    combo.calmBeforeStorm(currentTarget);
   } else if (key === '/' ) {
     astronautOn = true;
+  } else if (key === 'J' ) {
+    io.emit('pulse', {
+      name: 'slider',
+      r: 255,
+      g: 0,
+      b: 0,
+      totalFrames: 51,
+      slideFrames: 51
+    });
   } else if (key === '\b' ) {
     console.log("PULSAR: Delete all drawings");
     io.emit('pulsar control', {action: "clear"});
+  } else if (key === '3' ) {
+    console.log("Row 4 only");
+    currentTarget = {row: 4};
+  } else if (key === '6' ) {
+    console.log("Everywhere");
+    currentTarget = undefined;
   } else {
     console.log("PULSAR: Flashing... (pressed " + key + ")");
-    io.emit('pulse', {name: 'flash'});
+    var pulse = {name: 'flash'};
+    if (currentTarget) {
+      pulse.target = currentTarget;
+    }
+    io.emit('pulse', pulse);
   }
 }
 
