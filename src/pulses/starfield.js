@@ -7,6 +7,15 @@ var Drawing = function (p, pulse, config) {
 
   defaults.finalRotation = p.PI;
 
+  if (pulse.target) {
+    if (pulse.target.col) {
+      config.totalCols = 1;
+    }
+    if (pulse.target.row) {
+      config.totalRows = 1;
+    }
+  }
+
   defaults.config = config;
   defaults.gridWidth = config.totalCols * p.width;
   defaults.gridHeight = config.totalRows * p.height;
@@ -19,6 +28,8 @@ var Drawing = function (p, pulse, config) {
 
   defaults.rotationX = 0;
   defaults.rotationY = 0;
+
+  defaults.strokeSize = 16;
 
   p.pulsar.merge(defaults, pulse);
 
@@ -56,7 +67,7 @@ Drawing.prototype.draw = function (p) {
                rand*(pulse.randomColour*pulse.randomColour)%255, 
                rand*(pulse.randomColour*pulse.randomColour*pulse.randomColour)%255);
     }
-    p.strokeWeight(currentPoint % 16 + 8);
+    p.strokeWeight(currentPoint % pulse.strokeSize/2 + pulse.strokeSize);
     p.point(point.x, point.y);
   }
   p.pop();
