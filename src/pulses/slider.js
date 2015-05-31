@@ -5,7 +5,8 @@ var Drawing = function (p5, pulse) {
     // out of 255
     r: 255,
     g: 255,
-    b: 255
+    b: 255,
+    a: 255
   }
 
   p5.pulsar.merge(defaults, pulse);
@@ -20,7 +21,7 @@ Drawing.prototype.draw = function (p) {
   var pulse = self.pulse;
 
   p.rectMode(p.CORNER);
-  p.fill(pulse.r, pulse.g, pulse.b);
+  p.fill(pulse.r, pulse.g, pulse.b, pulse.a);
   
   var framesIn = pulse.totalFrames - pulse.framesLeft;
 
