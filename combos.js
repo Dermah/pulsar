@@ -127,4 +127,87 @@ Combos.prototype.calmBeforeStorm = function (target) {
   io.emit('pulse', pulse);
 }
 
+Combos.prototype.space = function(astronaut, starSize, target) {
+  var pulse = {
+    name: 'starfield',
+  }
+  if (target) {
+    pulse.target = target;
+  } else {
+    pulse.randomColour = 3;
+    pulse.strokeSize = starSize;
+  }
+  io.emit('pulse', pulse);
+  if (astronaut) {
+    var pulse = {
+      name: 'astronaut',
+      rotationX: (Math.random() * (2*1920/4)) - 1920/4,
+      rotationY: (Math.random() * (2*1080/4)) - 1080/4,
+      startRotation: (Math.random() * (4*Math.PI) - 2*Math.PI),
+      finalRotation: (Math.random() * (4*Math.PI) - 2*Math.PI),
+    }
+    if (target) {
+      pulse.target = target;
+    }
+    io.emit('pulse', pulse);
+    astronaut = false;
+  }
+}
+
+Combos.prototype.spaceUpdate = function (cols, rows, astronaut, shake, scale, target) {
+  var rotationX = (Math.random() * (2*cols*1920/4)) - cols*1920/4;
+  var rotationY = (Math.random() * (2*rows*1080/4)) - rows*1080/4;
+  var finalRotation = ((Math.random() * (4*Math.PI)) - 2*Math.PI);
+  var pulse = {
+    name: 'starfield',
+    rotationX: rotationX,
+    rotationY: rotationY + (2*rows*1080/4),
+    finalRotation: finalRotation,
+    framesLeft: 1000
+  }
+  if (target) {
+    height = Math.random() * (500) - 250;
+    console.log(rotationX)
+
+    console.log(height);
+  }
+  io.emit('pulse update', pulse);
+  var height = rotationY;
+  if (astronaut) {
+    var pulse = {
+      name: 'astronaut',
+    }
+    if (target) {
+      pulse.target = target;
+    }
+    io.emit('pulse', pulse);
+    astronaut = false;
+  }
+  io.emit('pulse update', {
+    name: 'astronaut',
+    rotationX: rotationX,
+    rotationY: height,
+    startRotation: (Math.random() * (4*Math.PI) - 2*Math.PI),
+    finalRotation: (Math.random() * (4*Math.PI) - 2*Math.PI),
+    framesLeft: 1000,
+    shake: shake,
+    scale: scale
+  });
+}
+  
+Combos.prototype.spaceNaut = function () {
+  var pulse = {
+    name: 'starburst',
+  }
+  io.emit('pulse', pulse);
+  io.emit('pulse', {
+    name: 'astronaut',
+    rotationX: 600,
+    rotationY: 200,
+    startRotation: (Math.random() * (4*Math.PI) - 2*Math.PI),
+    finalRotation: (Math.random() * (4*Math.PI) - 2*Math.PI),
+    framesLeft: 1000,
+  });
+}
+
 module.exports = Combos;

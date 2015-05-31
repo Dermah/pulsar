@@ -13,9 +13,10 @@ var songPath = "./starkeyShort.mp3"
 var song;
 var astronautOn = false;
 var currentTarget = undefined;
+var shake = 0;
 
-var totalCols = 6;
-var totalRows = 4;
+var totalCols = 2;
+var totalRows = 2;
 
 app.set('views', './pages');
 app.set('view engine', 'jade');
@@ -130,43 +131,12 @@ var processKey = function( key ){
     });
   } else if ( key === '.' ) {
     console.log("PULSAR: Sending starfield *");
-    var pulse = {
-      name: 'starfield',
-    }
-    if (currentTarget) {
-      pulse.target = currentTarget;
-    }
-    io.emit('pulse', pulse);
+    combo.space(astronautOn, 16, currentTarget);
+    astronautOn = false;
   } else if ( key === ',' ) {
     console.log("PULSAR: UPDATING STARFIELD *");
-    var rotationX = (Math.random() * (2*totalCols*1920/4)) - totalCols*1920/4;
-    var rotationY = (Math.random() * (2*totalRows*1080/4)) - totalRows*1080/4;
-    var finalRotation = ((Math.random() * (4*Math.PI)) - 2*Math.PI);
-    io.emit('pulse update', {
-      name: 'starfield',
-      rotationX: rotationX,
-      rotationY: rotationY + (2*totalRows*1080/4),
-      finalRotation: finalRotation,
-      framesLeft: 1000
-    });
-    if (astronautOn) {
-      var pulse = {
-        name: 'astronaut',
-      }
-      if (currentTarget) {
-        pulse.target = currentTarget;
-      }
-      io.emit('pulse', pulse);
-      astronautOn = false;
-    }
-    io.emit('pulse update', {
-      name: 'astronaut',
-      rotationX: rotationX,
-      rotationY: rotationY + (2*totalRows*1080/4),
-      startRotation: (Math.random() * (4*Math.PI) - 2*Math.PI),
-      finalRotation: (Math.random() * (4*Math.PI) - 2*Math.PI),
-      framesLeft: 1000
-    });
+    combo.spaceUpdate(totalCols, totalRows, astronautOn, 0, 1, currentTarget);
+    astronautOn = false;
   } else if ( key === '=' ) {
     var pulse = {
       name: 'strobe',
@@ -212,7 +182,7 @@ var processKey = function( key ){
   else if ( key === ' ' ) {
     // Atmos quiet intro
     console.log("PULSAR: Sending atmos");
-    combo.atmospheric(40000, currentTarget);
+    combo.atmospheric(25000, currentTarget);
   } else if ( key === 'B' ) {
     // Atmos quiet intro
     console.log("PULSAR: Sending gloc");
