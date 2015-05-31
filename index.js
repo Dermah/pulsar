@@ -4,6 +4,8 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var Combos = require('./combos.js');
 var combo = new Combos(io);
+var recorder = require('./recorder.js');
+var player = require('./player.js');
 
 var nextId = 0;
 
@@ -49,11 +51,22 @@ http.listen(3000, function(){
   console.log('SERVER: listening on *:3000');
 });
 
+
 var stdin = process.stdin;
 stdin.setRawMode(true);
 stdin.resume();
 stdin.setEncoding('utf8');
-stdin.on( 'data', function( key ){
+
+var processKey = function( key ){
+  if ( recorder.recording ) {
+    if ( key !== '[' &&
+         key !== ']' && 
+         key !== '{' &&
+         key !== '}') {
+      console.log("LOGGED");
+      recorder.log(key);
+    }
+  }
   // ctrl-c ( end of text )
   if ( key === '\u0003' ) {
     console.log("PULSAR: Exiting...");
@@ -126,8 +139,23 @@ stdin.on( 'data', function( key ){
       name: 'strobe',
       probability: 0.1
     });
+  } else if ( key === '}' ) {
+    console.log("PULSAR: Starting timer");
+    recorder.startTimer();
+  } else if ( key === '{' ) {
+    recorder.dump('./PULSARLOG.json');
+  } else if ( key === ']' ) {
+    console.log("PULSAR: Loading from file");
+    player.openLog('./PULSARLOG.json');
+    recorder.startTimer();
+  } else if ( key === '[' ) {
+    console.log("PULSAR: Playing from file");
+    player.play();
   } else {
     console.log("PULSAR: Flashing... (pressed " + key + ")");
     io.emit('pulse', {name: 'flash'});
   }
-});
+}
+
+stdin.on( 'data', processKey);
+player.on( 'press', processKey);
