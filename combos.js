@@ -47,19 +47,28 @@ Combos.prototype.flashUp = function(rate) {
   setInterval(march, 4*rate, rate);
 }
 
+Combos.prototype.flashUpOnce = function(rate) {
+  var self = this;
+    setTimeout(self.flashRow,      0, 4);
+    setTimeout(self.flashRow,   rate, 3);
+    setTimeout(self.flashRow, 2*rate, 2);
+    setTimeout(self.flashRow, 3*rate, 1);
+  }
+
 Combos.prototype.atmospheric = function (length, target) {
-  var pusle = {
+  var emitall = function() {
+    var pulse = {
       name: 'fade',
-      totalFrames: 12,
+      totalFrames: 60,
       r: Math.ceil(Math.random()*25),
       g: Math.ceil(Math.random()*25),
       b: Math.ceil(Math.random()*120),
       probability: 0.1,
+      layer: true,
     }
-  if (target) {
-    pulse.target = target;
-  }
-  var emitall = function() {
+    if (target) {
+      pulse.target = target;
+    }
     io.emit('pulse', pulse);
   };
   emitall();
@@ -94,7 +103,11 @@ Combos.prototype.glock3 = function (note, target) {
 Combos.prototype.slideUpDouble = function (frames, target) {
   var pulse = {
     name: 'slider',
-    totalFrames: 1
+    totalFrames: 1,
+    a: 50,
+    r: 255,
+    g: 0,
+    b: 0
   }
   if (target) {
     pulse.target = target;
@@ -116,8 +129,8 @@ Combos.prototype.calmBeforeStorm = function (target) {
     framesOn: 10,
     probability: 0.6,
     r: 255,
-    g: 100,
-    b: 100
+    g: 50,
+    b: 50
   }
 
   if (target) {
