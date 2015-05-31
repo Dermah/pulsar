@@ -7,12 +7,30 @@ var Drawing = function (p, pulse, config) {
 
   defaults.scale = 1;
 
-  defaults.config = config;
-  defaults.gridWidth = config.totalCols * p.width;
-  defaults.gridHeight = config.totalRows * p.height;
+  defaults.shake = 0;
 
-  defaults.xOffset = (config.col - 1) * p.width;
-  defaults.yOffset = (config.row - 2) * p.height;
+  defaults.config = {};
+  defaults.config.totalCols = config.totalCols;
+  defaults.config.totalRows = config.totalRows;
+  defaults.config.row = config.row;
+  defaults.config.col = config.col;
+
+  if (pulse.target) {
+    if (pulse.target.col) {
+      defaults.config.totalCols = 1;
+      defaults.config.col = 1;
+    }
+    if (pulse.target.row) {
+      defaults.config.totalRows = 1;
+      defaults.config.row = 1;
+    }
+  }
+
+  defaults.gridWidth = defaults.config.totalCols * p.width;
+  defaults.gridHeight = defaults.config.totalRows * p.height;
+
+  defaults.xOffset = (defaults.config.col - 1) * p.width;
+  defaults.yOffset = (defaults.config.row - 1) * p.height;
 
   defaults.rotationX = 0;
   defaults.rotationY = 0;
@@ -32,8 +50,12 @@ Drawing.prototype.draw = function (p) {
   // the above offsets are then used to translate the 
   // field relative to each screen
 
+  var shakeX = Math.random() * pulse.shake;
+  var shakeY = Math.random() * pulse.shake;
+
   p.push();
-  p.translate(pulse.gridWidth/2 - pulse.xOffset + pulse.rotationX, pulse.gridHeight/2 - pulse.yOffset - pulse.rotationY);
+  p.translate(pulse.gridWidth/2 - pulse.xOffset + pulse.rotationX + shakeX, 
+    pulse.gridHeight/2 - pulse.yOffset - pulse.rotationY + shakeY);
   p.rotate(pulse.startRotation + pulse.finalRotation * (pulse.framesLeft - pulse.totalFrames)/pulse.totalFrames);
   p.scale(pulse.scale, pulse.scale);
   
