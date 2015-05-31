@@ -221,6 +221,33 @@ var processKey = function( key ){
   } else if (key === '6' ) {
     console.log("Everywhere");
     currentTarget = undefined;
+  } else if ( key === '>' ) {
+    console.log("PULSAR: Sending starfield *");
+    combo.space(true, 60, currentTarget);
+  } else if ( key === '<' ) {
+    shake = 0;
+    console.log("PULSAR: Sending starfield *");
+    combo.space(true, 2000, currentTarget);
+  } else if ( key === 'P' ) {
+    console.log("PULSAR: UPDATING STARFIELD *");
+    combo.spaceUpdate(totalCols, totalRows, false, shake, 1, currentTarget);
+    astronautOn = false;
+    if (shake === 0) {
+      shake = 1;
+    }
+    shake = shake*2;
+  } else if ( key === 'O' ) {
+    console.log("PULSAR: UPDATING STARFIELD *");
+    combo.spaceUpdate(totalCols, totalRows, false, shake, 6, currentTarget);
+    astronautOn = false;
+    if (shake === 0) {
+      shake = 1;
+    }
+    shake = shake*2;
+  } else if ( key === 'U' ) {
+    combo.flashUpOnce(75);
+  } else if ( key === '!' ) {
+    combo.spaceNaut();
   } else {
     console.log("PULSAR: Flashing... (pressed " + key + ")");
     var pulse = {name: 'flash'};
