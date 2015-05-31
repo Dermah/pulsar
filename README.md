@@ -88,3 +88,5 @@ io.emit('pulse', {
   // drawing constructor
 });
 ```
+
+![Pulsar starting up on a screen](http://pulsar.dermah.org/pulsar.jpg)
