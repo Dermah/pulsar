@@ -1,13 +1,22 @@
-var tty = require('tty');
+// Web server and communication requires
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+
+// Console server control requires
+var tty = require('tty');
+
+// Music player requires
+var child = require('child_process');
+
+// Pulsar utility requires
 var Combos = require('./combos.js');
 var combo = new Combos(io);
-var child = require('child_process');
 var recorder = require('./recorder.js');
 var player = require('./player.js');
 
+// Global-ish variables that shouldn't be global 
+// and will be fixed later right?
 var nextId = 0;
 var songPath = "./song.mp3"
 var song;
@@ -15,9 +24,12 @@ var astronautOn = false;
 var currentTarget = undefined;
 var shake = 0;
 
+// Server side definition of what the PULSAR 
+// grid looks like (how many rows and columns)
 var totalCols = 6;
 var totalRows = 4;
 
+// Use jade page template thing
 app.set('views', './pages');
 app.set('view engine', 'jade');
 
