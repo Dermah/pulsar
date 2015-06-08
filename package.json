@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack src/pulsar.js dist/pulsar.js --module-bind json",
+    "watch": "npm run build --watch",
     "start": "node index.js"
   },
   "repository": {
