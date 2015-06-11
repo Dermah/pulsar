@@ -33,8 +33,10 @@ var totalRows = 4;
 app.set('views', './pages');
 app.set('view engine', 'jade');
 
+// What to do when a client connects to the server
 app.get('/', function(req, res){
 
+  // Default configuration variables for client
   var config = {
     id: nextId,
     totalCols: totalCols,
@@ -43,6 +45,9 @@ app.get('/', function(req, res){
     row: Math.floor(nextId/totalCols) + 1
   };
   
+  // If the client has not specified where it is in the grid,
+  // redirect to place it as the next in the grid
+  // Otherwise, honour the request for the specified column and row
   if (!req.query.col || !req.query.row) {
     res.redirect(302, "/?col=" + config.col + "&row=" + config.row);
     console.log("SERVER: Sent redirect to col: " + config.col + " row: " + config.row);
@@ -50,6 +55,8 @@ app.get('/', function(req, res){
   } else {
     config.col = parseInt(req.query.col);
     config.row = parseInt(req.query.row);
+
+    // Serve the html page, injecting configuration for pulsar.js to use
     res.render('index', { config: JSON.stringify(config) } );
     console.log("SERVER: Sent PULSAR to : " + config.col + " row: " + config.row);
   }
@@ -63,6 +70,11 @@ app.get('/astronaut.gif', function(req, res){
   res.sendFile(__dirname + '/astronaut.gif');
 });
 
+http.listen(3000, function(){
+  console.log('SERVER: listening on *:3000');
+});
+
+// Socket.io connection handling 
 io.on('connection', function(socket){
   console.log('PULSAR: client connected');
   socket.on('disconnect', function() {
@@ -70,17 +82,16 @@ io.on('connection', function(socket){
   });
 });
 
-http.listen(3000, function(){
-  console.log('SERVER: listening on *:3000');
-});
-
+// Set up keypress detection in stdin
 var stdin = process.stdin;
 stdin.setRawMode(true);
 stdin.resume();
 stdin.setEncoding('utf8');
 
+// Figure out what to do on each keypress
 var processKey = function( key ){
   if ( recorder.recording ) {
+    // Log all keys that aren't to do with keylogging
     if ( key !== '[' &&
          key !== ']' && 
          key !== '{' &&
