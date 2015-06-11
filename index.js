@@ -1,7 +1,5 @@
-// Web server and communication requires
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var router = require('./lib/transmitter/router.js');
+var io = require('socket.io')(router.server);
 
 // Console server control requires
 var tty = require('tty');
@@ -26,53 +24,8 @@ var shake = 0;
 
 // Server side definition of what the PULSAR 
 // grid looks like (how many rows and columns)
-var totalCols = 6;
-var totalRows = 4;
-
-// Use jade page template thing
-app.set('views', './pages');
-app.set('view engine', 'jade');
-
-// What to do when a client connects to the server
-app.get('/', function(req, res){
-
-  // Default configuration variables for client
-  var config = {
-    id: nextId,
-    totalCols: totalCols,
-    totalRows: totalRows,
-    col: (nextId % totalCols) + 1,
-    row: Math.floor(nextId/totalCols) + 1
-  };
-  
-  // If the client has not specified where it is in the grid,
-  // redirect to place it as the next in the grid
-  // Otherwise, honour the request for the specified column and row
-  if (!req.query.col || !req.query.row) {
-    res.redirect(302, "/?col=" + config.col + "&row=" + config.row);
-    console.log("SERVER: Sent redirect to col: " + config.col + " row: " + config.row);
-    nextId++;
-  } else {
-    config.col = parseInt(req.query.col);
-    config.row = parseInt(req.query.row);
-
-    // Serve the html page, injecting configuration for pulsar.js to use
-    res.render('index', { config: JSON.stringify(config) } );
-    console.log("SERVER: Sent PULSAR to : " + config.col + " row: " + config.row);
-  }
-});
-
-app.get('/pulsar.js', function(req, res){
-  res.sendFile(__dirname + '/dist/pulsar.js');
-});
-
-app.get('/astronaut.gif', function(req, res){
-  res.sendFile(__dirname + '/astronaut.gif');
-});
-
-http.listen(3000, function(){
-  console.log('SERVER: listening on *:3000');
-});
+var totalCols = 2;
+var totalRows = 2;
 
 // Socket.io connection handling 
 io.on('connection', function(socket){
