@@ -1,4 +1,14 @@
 var router = require('./lib/transmitter/router.js');
+
+var totalCols = 2;
+var totalRows = 2;
+router({
+  // Server side definition of what the PULSAR 
+  // grid looks like (how many rows and columns)
+  totalCols: totalCols,
+  totalRows: totalRows
+});
+
 var io = require('socket.io')(router.server);
 
 // Console server control requires
@@ -21,11 +31,6 @@ var song;
 var astronautOn = false;
 var currentTarget = undefined;
 var shake = 0;
-
-// Server side definition of what the PULSAR 
-// grid looks like (how many rows and columns)
-var totalCols = 2;
-var totalRows = 2;
 
 // Socket.io connection handling 
 io.on('connection', function(socket){
