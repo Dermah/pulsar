@@ -1,13 +1,9 @@
 var router = require('./lib/transmitter/router.js');
 
-var totalCols = 2;
-var totalRows = 2;
-router({
-  // Server side definition of what the PULSAR 
-  // grid looks like (how many rows and columns)
-  totalCols: totalCols,
-  totalRows: totalRows
-});
+// Server side definition of what the PULSAR 
+// grid looks like (how many rows and columns)
+var config = require('./config.json'); 
+router(config);
 
 var io = require('socket.io')(router.server);
 
@@ -115,7 +111,7 @@ var processKey = function( key ){
     astronautOn = false;
   } else if ( key === ',' ) {
     console.log("PULSAR: UPDATING STARFIELD *");
-    combo.spaceUpdate(totalCols, totalRows, astronautOn, 0, 1, currentTarget);
+    combo.spaceUpdate(config.totalCols, config.totalRows, astronautOn, 0, 1, currentTarget);
     astronautOn = false;
   } else if ( key === '=' ) {
     var pulse = {
@@ -210,7 +206,7 @@ var processKey = function( key ){
     combo.space(true, 2000, currentTarget);
   } else if ( key === 'P' ) {
     console.log("PULSAR: UPDATING STARFIELD *");
-    combo.spaceUpdate(totalCols, totalRows, false, shake, 1, currentTarget);
+    combo.spaceUpdate(config.totalCols, config.totalRows, false, shake, 1, currentTarget);
     astronautOn = false;
     if (shake === 0) {
       shake = 1;
@@ -218,7 +214,7 @@ var processKey = function( key ){
     shake = shake*2;
   } else if ( key === 'O' ) {
     console.log("PULSAR: UPDATING STARFIELD *");
-    combo.spaceUpdate(totalCols, totalRows, false, shake, 6, currentTarget);
+    combo.spaceUpdate(config.totalCols, config.totalRows, false, shake, 6, currentTarget);
     astronautOn = false;
     if (shake === 0) {
       shake = 1;
