@@ -1,8 +1,8 @@
-var router = require('./lib/transmitter/router.js');
-
 // Server side definition of what the PULSAR 
 // grid looks like (how many rows and columns)
 var config = require('./config.json'); 
+
+var router = require('./lib/transmitter/router.js');
 router(config);
 
 var io = require('socket.io')(router.server);
@@ -14,10 +14,10 @@ var tty = require('tty');
 var child = require('child_process');
 
 // Pulsar utility requires
-var Combos = require('./combos.js');
+var Combos = require('./lib/transmitter/combos.js');
 var combo = new Combos(io);
-var recorder = require('./recorder.js');
-var player = require('./player.js');
+var recorder = require('./lib/transmitter/recorder.js');
+var player = require('./lib/transmitter/player.js');
 
 // Global-ish variables that shouldn't be global 
 // and will be fixed later right?
