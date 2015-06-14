@@ -13,17 +13,17 @@ Clone this repo then
 
 ## Build
 
-You will need grunt installed globally by doing
+    npm run build
 
-    npm install grunt-cli -g
+This uses `webpack` to bundle all the PULSAR client-side drawing code into `dist/pulsar.js` which is served up by the web server later. You can also do
 
-then you can build by doing
-
-    grunt build
+    npm run watch
+    
+to automatically build everything when you make a change
 
 ## Run
 
-    node index.js
+    npm start
 
 ## Do stuff
 
