@@ -3,7 +3,9 @@ A distributed drawing thingamajig
 
 ![Pulsar starting up on a screen](http://pulsar.dermah.org/pulsar.jpg)
 
-PULSAR makes a grid of screens do co-ordinated stuff. It is based on the [p5 javascript drawing framework](http://p5js.org/) and [socket.io](http://socket.io)
+PULSAR makes a grid of screens do co-ordinated stuff. It is based on the [p5 javascript drawing framework](http://p5js.org/) and [socket.io](http://socket.io). 
+
+The current setup is there is one nodejs based server that sends signals to connected clients and tells them what to do. It's hard to explain what this thing does, so watch [this video](http://youtu.be/Ccd-JkUxiU0) to see what it's capable of. 
 
 ## Install
 
@@ -91,8 +93,7 @@ Drawing.prototype.update = function (p5, pulse, config) {
 
 Place your drawing in the `src/pulses/` directory.
 
-
-Then, to have the drawing activated on client machines, get `lib/transmitter/key-processor.js` to emit a `pulsar` `io` event.
+Then, to have the drawing activated on client machines, get `lib/transmitter/key-processor.js` to emit a `pulsar` `io` event when you press a key on the keyboard.
 
 ```JavaScript
 io.emit('pulse', { 
@@ -103,4 +104,4 @@ io.emit('pulse', {
 });
 ```
 
-![A row of screens](http://pulsar.dermah.org/PULSAR1.jpg)
+![A row of screens](http://pulsar.dermah.org/PULSAR2.jpg)
