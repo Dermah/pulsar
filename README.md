@@ -33,13 +33,17 @@ Rename `config-example.json` to `config.json`. Here you can specify the number o
 
 Point your browser to `localhost:3000`. You can (usually, depending on network conditions) get other computers to connect as well by navigating to the server's ip address on port 3000. 
 
-In the server window, press some buttons and watch as everything sorta kinda flashes in time!
+In the server terminal, press some buttons and watch as everything sorta kinda flashes in time!
 
-Press `ctrl-c` to kill the server.
-
-If you go to the base URL, you will automatically be redirected to be the next screen in the grid. You can manually change which grid position a screen is at by using URL arguments. For example, if you wanted to be at grid position `(2, 4)` you would use the URL
+If you go to the base URL as above, you will automatically be redirected to be the next screen in the grid. You can manually change which grid position a screen is at by using URL arguments. For example, if you wanted to be at grid position `(2, 4)` you would use the URL
 
     localhost:3000/?col=2&row=4
+
+To record your keypresses, press `}` to start recording and `{` when you are finished to write out the keypresses to `PULSARLOG.json`. To play them back, press `]` to load `PULSARLOG.json` and `[` to start playing. 
+
+Press `F8` to play the song specified in `config.json`. This cheats by using command line utilities. If you're on Windows, download [MPlayer](http://sourceforge.net/projects/mplayerwin/) and playe `mplayer.exe` in this folder. 
+
+Press `ctrl-c` to kill the server.
 
 ## Make your own drawings
 
