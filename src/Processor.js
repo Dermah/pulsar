@@ -1,12 +1,3 @@
-require('./pulses/flash.js');
-require('./pulses/ball.js');
-require('./pulses/pulsar-splash.js');
-require('./pulses/starburst.js');
-require('./pulses/starfield.js');
-require('./pulses/strobe.js');
-require('./pulses/fade.js');
-require('./pulses/bars.js');
-
 var Processor = function () {};
 
 Processor.prototype.createDrawing = function (p5, pulse, config) {
@@ -29,9 +20,11 @@ Processor.prototype.createDrawing = function (p5, pulse, config) {
   return drawing;
 }
 
-Processor.prototype.processControl = function (pulse, config) {
+Processor.prototype.processControl = function (pulse, dM, config) {
   if (pulse.action === 'reboot') {
     location.reload();
+  } else if (pulse.action === 'clear') {
+    dM.clear();
   }
 }
 

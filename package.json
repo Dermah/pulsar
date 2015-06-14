@@ -4,7 +4,10 @@
   "description": "A distributed visualiser",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack src/pulsar.js dist/pulsar.js --module-bind json",
+    "watch": "npm run build -- --watch",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +30,9 @@
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-browserify": "^3.7.0",
-    "grunt-contrib-watch": "^0.6.1"
+    "grunt-contrib-watch": "^0.6.1",
+    "json-loader": "^0.5.2",
+    "node-libs-browser": "^0.5.2",
+    "webpack": "^1.9.10"
   }
 }
