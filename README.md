@@ -49,19 +49,21 @@ To make your own drawings, you need to build an object with prototype like this:
 
 ```JavaScript
 // This prototype must be saved at src/pulses/name-of-drawing.js
-var Drawing = function (pulse) {
+var Drawing = function (p5, pulse, config) {
+  this.pulse = pulse;
   // The pulse object contains information to customise the drawing.
+  // You should mere it with some defaults
   // This drawing will only be used if pulse.name === name-of-drawing
   // Do your setup stuff here. For example, set up a frame counter to 
   // track how many frames this has been run for. 
   this.framesLeft = 50;
 };
-Drawing.prototype.draw = function (p) {
-  // p is the p5 object. This function is called every frame. 
-  // Do all your frame by frame drawing here.
+Drawing.prototype.draw = function (p5) {
+  // This function is called every frame. 
+  // Do all your frame by frame drawing using the p5 object here.
   // If you wanted to draw a rectangle in the middle of the screen
   // you would do the following:
-  p.rect(p.windowWidth/2, p.windowHeight/2, 50, 50);
+  p5.rect(p5.windowWidth/2, p5.windowHeight/2, 50, 50);
   this.framesLeft--;
 };
 Drawing.prototype.done = function () {
@@ -75,14 +77,18 @@ Drawing.prototype.done = function () {
 }
 module.exports = Drawing;
 ```
-
-Make sure the drawing is referenced in `Processor.js` or browserify will not include it in the bundle. 
+If you want your drawing to be updatable, add an update function. Usually you would merge the original `pulse` object that created the drawing with the update `pulse`. PULSAR provides a function on the p5 object to do this easily.
 
 ```JavaScript
-require('./pulses/name-of-drawing.js');
+Drawing.prototype.update = function (p5, pulse, config) {
+  p5.pulsar.merge(this.pulse, pulse);
+}
 ```
 
-Then, to have the drawing activated on client machines, get `index.js` to emit a `pulsar` io event.
+Place your drawing in the `src/pulses/` directory.
+
+
+Then, to have the drawing activated on client machines, get `lib/transmitter/key-processor.js` to emit a `pulsar` `io` event.
 
 ```JavaScript
 io.emit('pulse', { 
