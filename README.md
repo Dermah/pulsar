@@ -1,7 +1,7 @@
 # PULSAR
 A distributed drawing thingamajig
 
-![A row of screens](http://pulsar.dermah.org/headerimg.jpg)
+![Pulsar starting up on a screen](http://pulsar.dermah.org/pulsar.jpg)
 
 PULSAR makes a grid of screens do co-ordinated stuff. It is based on the [p5 javascript drawing framework](http://p5js.org/) and [socket.io](http://socket.io)
 
@@ -89,4 +89,4 @@ io.emit('pulse', {
 });
 ```
 
-![Pulsar starting up on a screen](http://pulsar.dermah.org/pulsar.jpg)
+![A row of screens](http://pulsar.dermah.org/PULSAR1.jpg)
