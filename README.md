@@ -25,6 +25,10 @@ to automatically build everything when you make a change
 
     npm start
 
+## Configure
+
+Rename `config-example.json` to `config.json`. Here you can specify the number of columns and rows in the PULSAR grid, and a relative path to an mp3 file that you can play on the server. 
+
 ## Do stuff
 
 Point your browser to `localhost:3000`. You can (usually, depending on network conditions) get other computers to connect as well by navigating to the server's ip address on port 3000. 
