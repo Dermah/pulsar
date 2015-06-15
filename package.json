@@ -25,12 +25,7 @@
     "jsonfile": "^2.0.1",
     "p5": "^0.4.4",
     "socket.io": "^1.3.5",
-    "socket.io-client": "^1.3.5"
-  },
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-browserify": "^3.7.0",
-    "grunt-contrib-watch": "^0.6.1",
+    "socket.io-client": "^1.3.5",
     "json-loader": "^0.5.2",
     "node-libs-browser": "^0.5.2",
     "webpack": "^1.9.10"
