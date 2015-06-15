@@ -1,9 +1,11 @@
 # PULSAR
 A distributed drawing thingamajig
 
-![A row of screens](http://pulsar.dermah.org/headerimg.jpg)
+![Pulsar starting up on a screen](http://pulsar.dermah.org/pulsar.jpg)
 
-PULSAR makes a grid of screens do co-ordinated stuff. It is based on the [p5 javascript drawing framework](http://p5js.org/) and [socket.io](http://socket.io)
+PULSAR makes a grid of screens do co-ordinated stuff. It is based on the [p5 javascript drawing framework](http://p5js.org/) and [socket.io](http://socket.io). 
+
+The current setup is there is one nodejs based server that sends signals to connected clients and tells them what to do. It's hard to explain what this thing does, so watch [this video](http://youtu.be/Ccd-JkUxiU0) to see what it's capable of. 
 
 ## Install
 
@@ -13,29 +15,37 @@ Clone this repo then
 
 ## Build
 
-You will need grunt installed globally by doing
+    npm run build
 
-    npm install grunt-cli -g
+This uses `webpack` to bundle all the PULSAR client-side drawing code into `dist/pulsar.js` which is served up by the web server later. You can also do
 
-then you can build by doing
-
-    grunt build
+    npm run watch
+    
+to automatically build everything when you make a change
 
 ## Run
 
-    node index.js
+    npm start
+
+## Configure
+
+Rename `config-example.json` to `config.json`. Here you can specify the number of columns and rows in the PULSAR grid, and a relative path to an mp3 file that you can play on the server. 
 
 ## Do stuff
 
 Point your browser to `localhost:3000`. You can (usually, depending on network conditions) get other computers to connect as well by navigating to the server's ip address on port 3000. 
 
-In the server window, press some buttons and watch as everything sorta kinda flashes in time!
+In the server terminal, press some buttons and watch as everything sorta kinda flashes in time!
 
-Press `ctrl-c` to kill the server.
-
-If you go to the base URL, you will automatically be redirected to be the next screen in the grid. You can manually change which grid position a screen is at by using URL arguments. For example, if you wanted to be at grid position `(2, 4)` you would use the URL
+If you go to the base URL as above, you will automatically be redirected to be the next screen in the grid. You can manually change which grid position a screen is at by using URL arguments. For example, if you wanted to be at grid position `(2, 4)` you would use the URL
 
     localhost:3000/?col=2&row=4
+
+To record your keypresses, press `}` to start recording and `{` when you are finished to write out the keypresses to `PULSARLOG.json`. To play them back, press `]` to load `PULSARLOG.json` and `[` to start playing. 
+
+Press `F8` to play the song specified in `config.json`. This cheats by using command line utilities. If you're on Windows, download [MPlayer](http://sourceforge.net/projects/mplayerwin/) and playe `mplayer.exe` in this folder. 
+
+Press `ctrl-c` to kill the server.
 
 ## Make your own drawings
 
@@ -45,19 +55,21 @@ To make your own drawings, you need to build an object with prototype like this:
 
 ```JavaScript
 // This prototype must be saved at src/pulses/name-of-drawing.js
-var Drawing = function (pulse) {
+var Drawing = function (p5, pulse, config) {
+  this.pulse = pulse;
   // The pulse object contains information to customise the drawing.
+  // You should mere it with some defaults
   // This drawing will only be used if pulse.name === name-of-drawing
   // Do your setup stuff here. For example, set up a frame counter to 
   // track how many frames this has been run for. 
   this.framesLeft = 50;
 };
-Drawing.prototype.draw = function (p) {
-  // p is the p5 object. This function is called every frame. 
-  // Do all your frame by frame drawing here.
+Drawing.prototype.draw = function (p5) {
+  // This function is called every frame. 
+  // Do all your frame by frame drawing using the p5 object here.
   // If you wanted to draw a rectangle in the middle of the screen
   // you would do the following:
-  p.rect(p.windowWidth/2, p.windowHeight/2, 50, 50);
+  p5.rect(p5.windowWidth/2, p5.windowHeight/2, 50, 50);
   this.framesLeft--;
 };
 Drawing.prototype.done = function () {
@@ -71,14 +83,17 @@ Drawing.prototype.done = function () {
 }
 module.exports = Drawing;
 ```
-
-Make sure the drawing is referenced in `Processor.js` or browserify will not include it in the bundle. 
+If you want your drawing to be updatable, add an update function. Usually you would merge the original `pulse` object that created the drawing with the update `pulse`. PULSAR provides a function on the p5 object to do this easily.
 
 ```JavaScript
-require('./pulses/name-of-drawing.js');
+Drawing.prototype.update = function (p5, pulse, config) {
+  p5.pulsar.merge(this.pulse, pulse);
+}
 ```
 
-Then, to have the drawing activated on client machines, get `index.js` to emit a `pulsar` io event.
+Place your drawing in the `src/pulses/` directory.
+
+Then, to have the drawing activated on client machines, get `lib/transmitter/key-processor.js` to emit a `pulsar` `io` event when you press a key on the keyboard.
 
 ```JavaScript
 io.emit('pulse', { 
@@ -88,3 +103,5 @@ io.emit('pulse', {
   // drawing constructor
 });
 ```
+
+![A row of screens](http://pulsar.dermah.org/PULSAR2.jpg)

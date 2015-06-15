@@ -1,4 +1,4 @@
-var Drawing = function (pulse, config) {
+var Drawing = function (p5, pulse, config) {
 
   if (!pulse.totalFrames) {
     pulse.totalFrames = 50;

@@ -4,7 +4,16 @@ var p5 = require('p5');
 pulsar.config = pulsarInitConfig;
 pulsarInitConfig = undefined;
 
+
 pulsar.sketch = function (p) {
+
+  // pulsar utils
+  p.pulsar = {};
+  p.pulsar.merge = function(defaults, pulse) {
+    for (var attribute in pulse) { 
+      defaults[attribute] = pulse[attribute]; 
+    }
+  }
 
   var Receiver = require('./Receiver.js');
   var receiver = new Receiver();
@@ -17,31 +26,43 @@ pulsar.sketch = function (p) {
 
   var versionTag = pulsar.name.toUpperCase() + "(" + pulsar.config.col + ", " + pulsar.config.row + ") - v" + pulsar.version;
 
+  p.preload = function () {
+    p.pulsar.img = {};
+    p.pulsar.img.astronaut = p.loadImage("astronaut.gif");
+  }
+
   p.setup = function() {
+    p.noCursor();
     p.frameRate(30);
     receiver.connect();
 
     receiver.on('pulse', function(data) {
       console.log("Pulsar: received: " + data);
-      var drawing = processor.createDrawing(data, pulsar.config);
-      dM.add(drawing);
+      var drawing = processor.createDrawing(p, data, pulsar.config);
+      if (drawing) {
+        dM.add(drawing);
+      }
     });
 
     receiver.on('pulsar control', function(data) {
       console.log("Pulsar: received: " + data);
-      processor.processControl(data, pulsar.config);
+      processor.processControl(data, dM, pulsar.config);
+    });
+
+    receiver.on('pulse update', function(data) {
+      console.log("Pulsar: update requested: " + data);
+      dM.update(data, pulsar.config);
     });
 
     p.createCanvas(p.windowWidth, p.windowHeight);
 
-    dM.add(processor.createDrawing({name: 'pulsar-splash', version: pulsar.version}));
+    dM.add(processor.createDrawing(p, {name: 'pulsar-splash', version: pulsar.version}));
   }
 
   p.draw = function() {
     p.noStroke();
     p.background(0);
 
-    
     dM.drawAll();
 
     p.textSize(15);

@@ -18,6 +18,11 @@ Receiver.prototype.connect = function() {
     console.log('Receiver: Received control pulse');
     self.emit('pulsar control', data);
   });
+
+  socket.on('pulse update', function(data) {
+    console.log('Receiver: Received update pulse');
+    self.emit('pulse update', data);
+  });
 }
 
 module.exports = Receiver;

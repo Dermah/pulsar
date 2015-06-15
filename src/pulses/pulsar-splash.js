@@ -1,4 +1,4 @@
-var Drawing = function (pulse, config) {
+var Drawing = function (p5, pulse, config) {
   pulse.framesLeft = 300;
   pulse.shade = 0;
 

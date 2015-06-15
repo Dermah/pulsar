@@ -1,24 +1,29 @@
 var Drawing = function (p5, pulse) {
-	var defaults = {
+  var defaults = {
     totalFrames: 15,
+    // out of 255
     r: 255,
     g: 255,
-    b: 255
+    b: 255, 
+    // out of 1 with respect to screen size
+    x: 0.5,
+    y: 0.5,
+    w: 1,
+    h: 0.2
   }
-  
 
   p5.pulsar.merge(defaults, pulse);
 
   defaults.framesLeft = defaults.totalFrames;
   
-	this.pulse = defaults;
+  this.pulse = defaults;
 };
 
 Drawing.prototype.draw = function (p) {
   var self = this;
   var pulse = self.pulse;
 
-  p.rectMode(p.CORNER);
+  p.rectMode(p.CENTER);
 
   p.fill('rgba(' + 
     pulse.r + ',' +
@@ -26,7 +31,10 @@ Drawing.prototype.draw = function (p) {
     pulse.b + ',' + 
     ((pulse.framesLeft)/pulse.totalFrames) + ')');
   
-  p.rect(0, 0, p.windowWidth, p.windowHeight);
+  p.rect(pulse.x* p.windowWidth, 
+         pulse.y*p.windowHeight, 
+         pulse.w*p.windowWidth, 
+         pulse.h*p.windowHeight);
 
   pulse.framesLeft--;
   
@@ -34,7 +42,7 @@ Drawing.prototype.draw = function (p) {
 
 Drawing.prototype.done = function () {
   if (this.pulse.framesLeft < 0) {
-  	return true;
+    return true;
   } else {
     return false;
   }
