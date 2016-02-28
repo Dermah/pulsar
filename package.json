@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Dermah/pulsar",
   "dependencies": {
+    "@dermah/pulsar-transmitter": "^0.1.0",
     "express": "^4.12.3",
     "jade": "^1.9.2",
     "jsonfile": "^2.0.1",
