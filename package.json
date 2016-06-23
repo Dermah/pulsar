@@ -21,7 +21,7 @@
   "homepage": "https://github.com/Dermah/pulsar",
   "dependencies": {
     "@dermah/pulsar-input-keyboard": "^0.2.0",
-    "@dermah/pulsar-transmitter": "^0.1.0",
+    "@dermah/pulsar-transmitter": "^0.2.0",
     "json-loader": "^0.5.2",
     "node-libs-browser": "^0.5.2",
     "p5": "^0.4.4",
