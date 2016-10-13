@@ -1,12 +1,21 @@
-// Server side definition of what the PULSAR
-// grid looks like (how many rows and columns)
-let config = require('./config.json');
-
-let Input = require('@dermah/pulsar-input-keyboard');
+let Input = require('@dermah/pulsar-transmitter');
 let Detector = require('@dermah/pulsar-transmitter');
 
-let input = new Input(config);
-let detector = new Detector(config);
+let input = new Input({
+  songPath: './song.mp3',
+  totalCols: 2,
+  totalRows: 2,
+  module: '@dermah/pulsar-vj',
+  port: 3001
+});
+
+let detector = new Detector({
+  songPath: './song.mp3',
+  totalCols: 2,
+  totalRows: 2,
+  module: '@dermah/pulsar-detector-p5',
+  port: 3000
+});
 
 input.on('pulse', pulse => {
   detector.detect('pulse', pulse);
